@@ -1,0 +1,40 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/chinmay/.cstags_dir/" . "esp-idf/")
+ ("/home/chinmay/" . ".emacs.d/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/chinmay/.emacs.d/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "config.org"
+ "init.el"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/chinmay/.emacs.d/" (24261 39881 544747 160000) "./" "elpa/" "config.org" "init.el" "auto-save-list/" "ido.last" "ido.last~" ".#config.org" "config.el" ".git/" "../" "#config.org#" "smex-items")
+
+ ("/home/chinmay/" (24261 39057 806580 452000) ".urxvt/" ".python-gitlab.cfg" ".mozilla/" ".gimp-2.8/" ".swh" ".face" ".gitconfig" "nohup.out" ".cwd" "./" "nordic/" ".swg" ".thunderbird/" ".scripts/" ".bash/" ".gem/" ".swl" ".vim/" ".ICEauthority" ".config/" ".cache/" ".thumbnails/" ".ssh/" ".vimrc" "sweyntooth_bluetooth_low_energy_attacks/" ".bash_history" ".newsrc" ".swo" ".alias" ".java/" ".xinitrc" ".fonts/" ".bashrc" ".fehbg" ".dbus/" "Music/" ".openocd_history" ".creds" ".viminfz.tmp" ".xsel.log" ".swn" ".swi" ".vimgolf/" "esp/" ".swp" "Documents/" ".bash_logout" ".swk" ".xscreensaver" ".ccache/" ".cstags_dir/" ".gitignore" "snap/" ".newsrc.eld" ".swm" ".bash_profile" ".Xresources" ".zoom/" ".wget-hsts" ".fonts.conf" ".gnome/" ".nrfconnect-apps/" ".terminfo/" ".lesshst" ".pki/" ".apport-ignore.xml" "pnl/" ".python_history" "Pictures/" ".inputrc" ".tmp/" ".zephyrrc" ".Xauthority" "Downloads/" ".swj" ".espressif/" ".profile" ".gtkrc-2.0" ".local/" ".gnupg/" ".recently-used" ".deepinwine/" ".sudo_as_admin_successful" ".vnc/" "todo.txt" ".espconfig" "Desktop/" ".kde/" ".gconf/" "discoverLogs.txt" ".segger/" ".viminfo" "Templates/" ".grip/" ".davmail.properties" "News/" ".face.icon" ".xsession-errors" "../" "mpdmenu" ".viminfo.tmp" ".emacs.d/" ".Xdefaults")
+
+ ("/home/" (23946 11264 262834 333000) "./" ".directory" "chinmay/" "../")
+
+ ("/home/chinmay/pnl/" (24261 12312 873854 303000) "Money Heist aka La Casa de Papel S03 Season 03 Complete 720p WEB-DL x264-XpoZ/" "./" "emacs.pdf" "How.Linux.Works.What.Every.Superuser.Should.Know.2nd.Edition.pdf" "Money Heist (2020) English S04 Complete 720p NF WEBRip DD-5.1 ESub x264 - Shadow/" "eintr.pdf" "sicp.pdf" "emacs-xtra.pdf" "github/" "../")
+
+ ("/home/chinmay/pnl/github/" (24243 39789 490842 833000) "dot-files/" "./" "python-gatt-server/" "xcwd/" "st/" "githug-solutions/" "chhajedji.github.io/" "dwm/" "../")
+
+ ("/home/chinmay/pnl/github/dwm/" (24261 38944 976495 716000) "bar.png" "drw.o" "README.md" "./" "Makefile" "util.o" "dwm.c" "config.def.h" "drw.c" ".build" "config.mk" "dwm.c.orig" "util.h" "drw.h" "dwm.1" ".gitignore" "config.h" "dwm.o" "dwm" ".git/" "transient.c" "patches/" "util.c" "config.def.h.orig" "../" "dwm.png")
+
+ ("/home/chinmay/.cstags_dir/esp-idf/" (24261 33873 874192 47000) "./" "tags" "cscope.files" "cscope.out" "../")
+
+ ("/home/chinmay/.cstags_dir/" (24260 61777 842080 656000) "./" "repos/" "st/" "esp-idf/" "dwm/" "../")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

@@ -41,6 +41,10 @@
   :bind
   ("M-x" . smex))
 
+;; set evil mode on starup for vim keybindings.
+(require 'evil)
+(evil-mode 1)
+
 ;; Hide toolbar, menubar and scrollbar.
 (tool-bar-mode -1)
 (menu-bar-mode -1)

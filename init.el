@@ -52,7 +52,7 @@
      ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (org-bullets beacon spacemacs-theme helm-cscope which-key use-package)))
+    (evil org-bullets beacon helm-cscope which-key use-package)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

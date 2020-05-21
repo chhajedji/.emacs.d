@@ -55,8 +55,20 @@
 #+END_SRC
 
 
-** IDO
+** avy
 
+#+BEGIN_SRC emacs-lisp
+
+  (use-package avy
+    :ensure t
+    :bind
+    ("M-s" . avy-goto-char))
+
+#+END_SRC
+
+
+** IDO
+   
 *** enable ido mode
 
 #+BEGIN_SRC emacs-lisp
@@ -99,50 +111,57 @@
 #+END_SRC
 
 
-** evil
-
-#+BEGIN_SRC emacs-lisp
-
-  ;; set evil mode on starup for vim keybindings.
-  (require 'evil)
-  (evil-mode 1)
-
-#+END_SRC
 
 
 * Appearance
+
 #+BEGIN_SRC emacs-lisp
-  ;; Hide toolbar, menubar and scrollbar.
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1)
+    ;; Hide toolbar, menubar and scrollbar.
+    (tool-bar-mode -1)
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
 
-  ;; Do not show welcome screen on startup.
-  (setq inhibit-startup-screen t)
+    ;; Do not show welcome screen on startup.
+    (setq inhibit-startup-screen t)
 
-  ;; Define alias for yes or no.
-  (defalias 'yes-or-no-p 'y-or-n-p)
+    ;; Define alias for yes or no.
+    (defalias 'yes-or-no-p 'y-or-n-p)
 
-  ;; Scroll line by line when reached end of screen.
-  (setq scroll-conservatively 100)
+    ;; Scroll line by line when reached end of screen.
+    (setq scroll-conservatively 100)
 
-  ;; Ignore bell.
-  (setq ring-bell-function 'ignore)
+    ;; Ignore bell.
+    (setq ring-bell-function 'ignore)
 
-  ;; When using GUI version, convert symbol text into symbols.
-  (when window-system (global-prettify-symbols-mode t))
+    ;; When using GUI version, convert symbol text into symbols.
+    (when window-system (global-prettify-symbols-mode t))
 
-  ;; Do not create backup and autosave files.
-  (setq make-backup-files nil)
-  (setq auto-save-default nil)
+    ;; Do not create backup and autosave files.
+    (setq make-backup-files nil)
+    (setq auto-save-default nil)
 
-  ;; Show line number and relative numbers.
-  (global-display-line-numbers-mode t)
-  (setq global-display-line-numbers 'relative)
+    ;; Show line number and relative numbers.
+    (global-display-line-numbers-mode t)
+    (setq global-display-line-numbers 'relative)
 
-  ;; Set transperant background.
-  (set-frame-parameter (selected-frame) 'alpha '(85 75))
-  (add-to-list 'default-frame-alist '(alpha 85 75))
+    ;; Set transperant background.
+    (set-frame-parameter (selected-frame) 'alpha '(85 75))
+    (add-to-list 'default-frame-alist '(alpha 85 75))
+
+  (add-hook 'shell-mode-hook
+	(lambda ()
+	  (face-remap-set-base 'comint-highlight-prompt :inherit
+	  nil)))
+
+#+END_SRC
+
+** rainbow
+#+BEGIN_SRC emacs-lisp
+
+  (use-package rainbow-mode
+    :ensure t
+    :init (rainbow-mode 1))
+
 #+END_SRC
 
 
@@ -155,3 +174,28 @@
 
 #+END_SRC
 
+
+* Config edit/reload
+
+** edit
+
+#+BEGIN_SRC emacs-lisp
+
+  (defun config-visit()
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+    (global-set-key (kbd "C-c e") 'config-visit)
+
+#+END_SRC
+
+
+** reload
+
+#+BEGIN_SRC emacs-lisp
+
+  (defun config-reload()
+    (interactive)
+    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+  (global-set-key (kbd "C-c r") 'config-reload)
+
+#+END_SRC

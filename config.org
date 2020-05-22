@@ -52,6 +52,7 @@
 #+BEGIN_SRC emacs-lisp
   (load-file "/usr/share/emacs/site-lisp/xcscope/xcscope.el")
   (require 'xcscope)
+  (setq cscope-set-initial-directory "~/.cstags_dir/esp-idf/")
 #+END_SRC
 
 

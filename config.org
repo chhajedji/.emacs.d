@@ -22,8 +22,12 @@
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
-#+END_SRC
 
+  (add-hook 'shell-mode-hook
+	(lambda ()
+	  (face-remap-set-base 'comint-highlight-prompt :inherit
+	  nil)))
+#+END_SRC
 
 ** which-keys
 
@@ -33,7 +37,6 @@
     :init
     (which-key-mode))
 #+END_SRC
-
 
 ** beacon
 
@@ -46,7 +49,6 @@
   (beacon-mode 1))
 #+END_SRC
 
-
 ** cscope
    
 #+BEGIN_SRC emacs-lisp
@@ -54,7 +56,6 @@
   (require 'xcscope)
   (setq cscope-set-initial-directory "~/.cstags_dir/esp-idf/")
 #+END_SRC
-
 
 ** avy
 
@@ -66,7 +67,6 @@
     ("M-s" . avy-goto-char))
 
 #+END_SRC
-
 
 ** IDO
    
@@ -111,49 +111,31 @@
 
 #+END_SRC
 
-
-
-
-* Appearance
-
+** evil mode enable
 #+BEGIN_SRC emacs-lisp
-    ;; Hide toolbar, menubar and scrollbar.
-    (tool-bar-mode -1)
-    (menu-bar-mode -1)
-    (scroll-bar-mode -1)
-
-    ;; Do not show welcome screen on startup.
-    (setq inhibit-startup-screen t)
-
-    ;; Define alias for yes or no.
-    (defalias 'yes-or-no-p 'y-or-n-p)
-
-    ;; Scroll line by line when reached end of screen.
-    (setq scroll-conservatively 100)
-
-    ;; Ignore bell.
-    (setq ring-bell-function 'ignore)
-
-    ;; When using GUI version, convert symbol text into symbols.
-    (when window-system (global-prettify-symbols-mode t))
-
-    ;; Do not create backup and autosave files.
-    (setq make-backup-files nil)
-    (setq auto-save-default nil)
-
-    ;; Show line number and relative numbers.
-    (global-display-line-numbers-mode t)
-    (setq global-display-line-numbers 'relative)
-
-    ;; Set transperant background.
-    (set-frame-parameter (selected-frame) 'alpha '(85 75))
-    (add-to-list 'default-frame-alist '(alpha 85 75))
-
-  (add-hook 'shell-mode-hook
-	(lambda ()
-	  (face-remap-set-base 'comint-highlight-prompt :inherit
-	  nil)))
-
+  (use-package evil
+    :ensure t
+    :init (evil-mode 1))
+#+END_SRC
+** sudo-edit
+#+BEGIN_SRC emacs-lisp
+(use-package sudo-edit
+:ensure t
+:bind ("C-c s" . sudo-edit))
+#+END_SRC
+** switch-window
+#+BEGIN_SRC emacs-lisp
+  (use-package switch-window
+    :ensure t
+    :config
+    (setq switch-window-input-style 'minibuffer)
+    (setq switch-window-increase 4)
+    (setq switch-window-threshold 2)
+    (setq switch-window-shortcut-style 'qwerty)
+    (setq switch-window-qwerty-shortcuts
+	  '("j" "k" "l" "f" "d" "s" "a"))
+    :bind
+    ([remap other-window] . switch-window))
 #+END_SRC
 
 ** rainbow
@@ -163,6 +145,69 @@
     :ensure t
     :init (rainbow-mode 1))
 
+#+END_SRC
+
+
+* Minor Settings
+
+** subword (disabled)
+#+BEGIN_SRC emacs-lisp
+; (global-subword-mode 1)
+#+END_SRC
+** Hide toolbar, menubar and scrollbar.
+#+BEGIN_SRC emacs-lisp
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+#+END_SRC
+** Do not show welcome screen on startup.
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-screen t)
+#+END_SRC
+** Define alias for yes or no.
+#+BEGIN_SRC emacs-lsip
+    (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+** Scroll line by line when reached end of screen.
+#+BEGIN_SRC emacs-lisp
+    (setq scroll-conservatively 100)
+#+END_SRC
+
+** Ignore bell.
+#+BEGIN_SRC emacs-lisp
+    (setq ring-bell-function 'ignore)
+#+END_SRC
+
+** When using GUI version, convert symbol text into symbols.
+#+BEGIN_SRC emacs-lisp
+    (when window-system (global-prettify-symbols-mode t))
+#+END_SRC
+
+** Do not create backup and autosave files.
+#+BEGIN_SRC emacs-lisp
+    (setq make-backup-files nil)
+    (setq auto-save-default nil)
+#+END_SRC
+
+** Show line number and relative numbers.
+#+BEGIN_SRC emacs-lisp
+    (global-display-line-numbers-mode t)
+    (setq global-display-line-numbers 'relative)
+#+END_SRC
+
+** Set transperant background.
+#+BEGIN_SRC emacs-lisp
+    (set-frame-parameter (selected-frame) 'alpha '(85 75))
+    (add-to-list 'default-frame-alist '(alpha 85 75))
+#+END_SRC
+
+** kill word (like diw in vim)
+#+BEGIN_SRC emacs-lisp
+  (defun kill-whole-word()
+    (interactive)
+    (backward-word)
+    (kill-word 1))
+  (global-set-key (kbd "C-c w w") 'kill-whole-word)
 #+END_SRC
 
 
@@ -189,7 +234,6 @@
 
 #+END_SRC
 
-
 ** reload
 
 #+BEGIN_SRC emacs-lisp
@@ -198,5 +242,25 @@
     (interactive)
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
+
+#+END_SRC
+
+
+* window splitting function
+#+BEGIN_SRC emacs-lisp
+
+  (defun split-and-follow-horizontally()
+    (interactive)
+    (split-window-below)
+    (balance-windows)
+    (other-window 1))
+    (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+  (defun split-and-follow-vertically()
+    (interactive)
+    (split-window-right)
+    (balance-windows)
+    (other-window 1))
+    (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 
 #+END_SRC

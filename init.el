@@ -22,7 +22,7 @@
 ;; Load config.org file.
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
-  (custom-set-variables
+(custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
@@ -52,7 +52,7 @@
      ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (rainbow-mode avy magit evil org-bullets beacon helm-cscope which-key use-package)))
+    (sudo-edit switch-window rainbow-mode avy magit evil org-bullets beacon which-key use-package)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

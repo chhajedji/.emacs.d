@@ -148,6 +148,10 @@
 #+BEGIN_SRC emacs-lisp
 ; (global-subword-mode 1)
 #+END_SRC
+** Use _ as part of word
+#+BEGIN_SRC emacs-lisp
+  (modify-syntax-entry ?_ "w")
+#+END_SRC
 ** Hide toolbar, menubar and scrollbar.
 #+BEGIN_SRC emacs-lisp
 (tool-bar-mode -1)
@@ -185,8 +189,8 @@
 
 ** Show line number and relative numbers.
 #+BEGIN_SRC emacs-lisp
-    (global-display-line-numbers-mode t)
-    (setq global-display-line-numbers 'relative)
+  (display-line-numbers-mode)
+  (setq display-line-numbers 'relative)
 #+END_SRC
 
 ** Set transperant background.
@@ -203,7 +207,6 @@
     (kill-word 1))
   (global-set-key (kbd "C-c w w") 'kill-whole-word)
 #+END_SRC
-
 
 * Buffers
 

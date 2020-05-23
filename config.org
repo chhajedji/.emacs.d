@@ -2,13 +2,13 @@
 
 ** Setting default shell to bash
 
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   ;; `ansi-term` will launch bash without prompt.
   (defvar my-term-shell "/bin/bash")
   (defadvice ansi-term (before force-bash)
     (interactive (list my-term-shell)))
   (ad-activate 'ansi-term)
-#+END_SRC
+   #+END_SRC
 
 
 * Packages
@@ -17,83 +17,110 @@
 
 *** Org bullets
 
-#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 
   (add-hook 'shell-mode-hook
-	(lambda ()
-	  (face-remap-set-base 'comint-highlight-prompt :inherit
-	  nil)))
-#+END_SRC
+    (lambda ()
+      (face-remap-set-base 'comint-highlight-prompt :inherit
+      nil)))
+    #+END_SRC
+
+*** Source window split disable
+    #+BEGIN_SRC emacs-lisp
+      ;; Hitting C-' to edit code in org mode will change current window
+      ;; rather than splitting a new window.
+      (setq org-src-window-setup 'current-window)
+
+    #+END_SRC
+
+*** Emacs lisp template shortcut
+    #+BEGIN_SRC emacs-lisp
+  ;; Type "<el <TAB>" and emacs-lisp template will auto reload!
+  (add-to-list 'org-structure-template-alist
+  '("el"  "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+    #+END_SRC
 
 ** which-keys
 
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package which-key
     :ensure t
     :init
     (which-key-mode))
-#+END_SRC
+   #+END_SRC
 
 ** beacon
 
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 ;; This package highlights cursor for very small time when switching
 ;; buffers.
 (use-package beacon
   :ensure t
   :init
   (beacon-mode 1))
-#+END_SRC
+   #+END_SRC
 
-** cscope
+** cscope and tags
    
-#+BEGIN_SRC emacs-lisp
-  (load-file "/usr/share/emacs/site-lisp/xcscope/xcscope.el")
-  (require 'xcscope)
-  (setq cscope-set-initial-directory "~/.cstags_dir/esp-idf/")
-#+END_SRC
-
+   Adding cscope database.
+   #+BEGIN_SRC emacs-lisp
+    (load-file "~/.emacs.d/xcscope.el")
+    (require 'xcscope)
+    (cscope-setup)
+    (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
+   #+END_SRC
+   
+   Adding TAGS files.
+   #+BEGIN_SRC emacs-lisp
+     (setq tags-table-list '("~/.cstags_dir/esp-idf/TAGS"))
+   #+END_SRC
 ** avy
 
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 
   (use-package avy
     :ensure t
     :bind
     ("M-s" . avy-goto-char))
 
-#+END_SRC
+   #+END_SRC
 
 ** IDO
    
+
 *** enable ido mode
 
-#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
   (setq ido-enable-flex-matching nil)
   (setq ido-create-new-buffer 'always)
   (setq ido-everywhere 1)
   (ido-mode 1)
-#+END_SRC
-
+    #+END_SRC
 
 *** ido-vertical
 
-#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
   (use-package ido-vertical-mode
     :ensure t
     :init
     (ido-vertical-mode 1))
   (setq ido-vertical-define-keys 'C-n-and-C-p-only)
-#+END_SRC
+    #+END_SRC
 
+*** switch buffers
+    #+BEGIN_SRC emacs-lisp
 
-*** smex
+  (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 
-#+BEGIN_SRC emacs-lisp
+    #+END_SRC
+
+** smex
+
+   #+BEGIN_SRC emacs-lisp
 
   (use-package smex
     :ensure t
@@ -101,24 +128,17 @@
     :bind
     ("M-x" . smex))
 
-#+END_SRC
-
-
-*** switch buffers
-#+BEGIN_SRC 
-
-  (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-
-#+END_SRC
+   #+END_SRC
 
 ** evil mode enable
-#+BEGIN_SRC emacs-lisp
-  (use-package evil
-    :ensure t
-    :init (evil-mode 1))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package evil
+       :ensure t
+       :init (evil-mode 1))
+     (evil-set-initial-state 'term-mode 'emacs)
+   #+END_SRC
 ** switch-window
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package switch-window
     :ensure t
     :config
@@ -127,124 +147,239 @@
     (setq switch-window-threshold 2)
     (setq switch-window-shortcut-style 'qwerty)
     (setq switch-window-qwerty-shortcuts
-	  '("j" "k" "l" "f" "d" "s" "a"))
+      '("j" "k" "l" "f" "d" "s" "a"))
     :bind
     ([remap other-window] . switch-window))
-#+END_SRC
+   #+END_SRC
 
 ** rainbow
-#+BEGIN_SRC emacs-lisp
+
+*** Enable rainbow mode.
+    #+BEGIN_SRC emacs-lisp
 
   (use-package rainbow-mode
     :ensure t
     :init (rainbow-mode 1))
 
-#+END_SRC
+    #+END_SRC
+*** Highlight matching brackets.
+    #+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :init
+    (rainbow-delimiters-mode 1))
+    #+END_SRC
+
+** dashboard
+   #+BEGIN_SRC emacs-lisp
+    (use-package dashboard
+      :ensure t
+      :config
+      (dashboard-setup-startup-hook)
+      (setq dashboard-items '((recents . 10)))
+      (setq dashboard-banner-logo-title "Welcome to Emacs."))
+   #+END_SRC
+
+** diminish   
+   Diminish minor modes from mode line.
+   #+BEGIN_SRC emacs-lisp
+  (use-package diminish
+    :ensure t
+    :init
+    (diminish 'beacon-mode)
+    (diminish 'which-key-mode)
+    (diminish 'rainbow-mode)
+    (diminish 'subword-mode))
+   #+END_SRC
+** spaceline
+   #+BEGIN_SRC emacs-lisp
+     (use-package spaceline
+       :ensure t
+       :config
+       (require 'spaceline-config)
+       (setq powerline-default-separator (quote arrow))
+       (spaceline-spacemacs-theme))
+   #+END_SRC
+** popup-kill-ring
+   Interactive pop up for kill history. By default `M-y' switches to previous kills.
+   #+BEGIN_SRC emacs-lisp
+  (use-package popup-kill-ring
+    :ensure t
+    :bind ("M-y" . popup-kill-ring))
+   #+END_SRC
+** company
+   #+BEGIN_SRC emacs-lisp
+     (use-package company
+       :ensure t
+       :init
+       (add-hook 'after-init-hook 'global-company-mode)
+       :config
+       ;; Set delay and minimum length to start suggestions.
+       (setq company-idle-delay 1)
+       (setq company-minimum-prefix-length 3))
+
+       ;; Change M-n and M-p bindings to C-n and C-p to navigate in list.
+     (with-eval-after-load 'company
+       (define-key company-active-map (kbd "M-n") nil)
+       (define-key company-active-map (kbd "M-p") nil)
+       (define-key company-active-map (kbd "C-n") #'company-select-next)
+       (define-key company-active-map (kbd "C-p") #'company-select-previous))
+   #+END_SRC
 
 
 * Minor Settings
 
 ** subword (disabled)
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 ; (global-subword-mode 1)
-#+END_SRC
+   #+END_SRC
 ** Use _ as part of word
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (modify-syntax-entry ?_ "w")
-#+END_SRC
+   #+END_SRC
 ** Hide toolbar, menubar and scrollbar.
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-#+END_SRC
+   #+END_SRC
 ** Do not show welcome screen on startup.
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 (setq inhibit-startup-screen t)
-#+END_SRC
+   #+END_SRC
 ** Define alias for yes or no.
-#+BEGIN_SRC emacs-lsip
+   #+BEGIN_SRC emacs-lsip
     (defalias 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
+   #+END_SRC
 ** Scroll line by line when reached end of screen.
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (setq scroll-conservatively 100)
-#+END_SRC
+   #+END_SRC
 
 ** Ignore bell.
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (setq ring-bell-function 'ignore)
-#+END_SRC
+   #+END_SRC
 
 ** When using GUI version, convert symbol text into symbols.
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (when window-system (global-prettify-symbols-mode t))
-#+END_SRC
+   #+END_SRC
 
 ** Do not create backup and autosave files.
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (setq make-backup-files nil)
     (setq auto-save-default nil)
-#+END_SRC
-
-** Show line number and relative numbers.
-#+BEGIN_SRC emacs-lisp
-  (display-line-numbers-mode)
-  (setq display-line-numbers 'relative)
-#+END_SRC
-
-** Set transperant background.
-#+BEGIN_SRC emacs-lisp
-    (set-frame-parameter (selected-frame) 'alpha '(85 75))
-    (add-to-list 'default-frame-alist '(alpha 85 75))
-#+END_SRC
+   #+END_SRC
 
 ** kill word (like diw in vim)
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (defun kill-whole-word()
     (interactive)
     (backward-word)
     (kill-word 1))
-  (global-set-key (kbd "C-c w w") 'kill-whole-word)
-#+END_SRC
+  (global-set-key (kbd "C-c w k") 'kill-whole-word)
+   #+END_SRC
+
+** copy line (like yy in vim)
+   #+BEGIN_SRC emacs-lisp
+     (defun copy-whole-line()
+       (interactive)
+       (save-excursion
+    (kill-new
+     (buffer-substring
+      (point-at-bol)
+      (point-at-eol)))))
+     (global-set-key (kbd "C-c w l") 'copy-whole-line)
+   #+END_SRC
+
+** Show time
+   #+BEGIN_SRC emacs-lisp
+  (setq display-time-24hr-format t)
+  (display-time-mode 1)
+   #+END_SRC
+
+** Not listed.
+
+   Set relative line numbers in all modes.
+   #+BEGIN_SRC emacs-lisp
+   (require 'display-line-numbers)
+  (global-display-line-numbers-mode)
+  (setq display-line-numbers-type 'relative)
+   #+END_SRC
+
+   Show line and column number on bottom bar.
+   #+BEGIN_SRC emacs-lisp
+  (line-number-mode 1)
+  (column-number-mode 1)
+   #+END_SRC
+
+   Set font details: Background, Foreground, Font, Size.
+   #+BEGIN_SRC emacs-lisp
+    (set-face-attribute 'default nil :background "black"
+    :foreground "grey" :font "Noto Mono 12")
+   #+END_SRC
+   
+   Set transparency when focused and unfocused.
+   #+BEGIN_SRC emacs-lisp
+    (set-frame-parameter (selected-frame) 'alpha '(87 80))
+    (add-to-list 'default-frame-alist '(alpha 87 80))
+
+   #+END_SRC
+
 
 * Buffers
 
 ** Enable ibuffer
-#+BEGIN_SRC emacs-lisp
-
+   #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-x b") 'ibuffer)
+   #+END_SRC
 
-#+END_SRC
+** Kill current buffer
+   #+BEGIN_SRC emacs-lisp
+     (defun kill-curr-buffer()
+       (interactive)
+       (kill-buffer (current-buffer)))
+     (global-set-key (kbd "C-x k") 'kill-curr-buffer)
+   #+END_SRC
+
+** Kill all buffers
+   #+BEGIN_SRC emacs-lisp
+  (defun kill-all-buffers()
+    (interactive)
+    (mapc 'kill-buffer (buffer-list)))
+  (global-set-key (kbd "C-c k a") 'kill-all-buffers)
+   #+END_SRC
 
 
 * Config edit/reload
 
-** edit
+** Edit
 
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 
   (defun config-visit()
     (interactive)
     (find-file "~/.emacs.d/config.org"))
     (global-set-key (kbd "C-c e") 'config-visit)
 
-#+END_SRC
+   #+END_SRC
 
-** reload
+** Reload config.org
 
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 
   (defun config-reload()
     (interactive)
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
 
-#+END_SRC
+   #+END_SRC
 
 
 * window splitting function
-#+BEGIN_SRC emacs-lisp
+
+  #+BEGIN_SRC emacs-lisp
 
   (defun split-and-follow-horizontally()
     (interactive)
@@ -260,4 +395,4 @@
     (other-window 1))
     (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 
-#+END_SRC
+  #+END_SRC

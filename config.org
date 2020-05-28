@@ -215,8 +215,8 @@
        (add-hook 'after-init-hook 'global-company-mode)
        :config
        ;; Set delay and minimum length to start suggestions.
-       (setq company-idle-delay 1)
-       (setq company-minimum-prefix-length 3))
+       (setq company-idle-delay 0)
+       (setq company-minimum-prefix-length 2))
 
        ;; Change M-n and M-p bindings to C-n and C-p to navigate in list.
      (with-eval-after-load 'company
@@ -229,14 +229,6 @@
 
 * Minor Settings
 
-** subword (disabled)
-   #+BEGIN_SRC emacs-lisp
-; (global-subword-mode 1)
-   #+END_SRC
-** Use _ as part of word
-   #+BEGIN_SRC emacs-lisp
-  (modify-syntax-entry ?_ "w")
-   #+END_SRC
 ** Hide toolbar, menubar and scrollbar.
    #+BEGIN_SRC emacs-lisp
 (tool-bar-mode -1)
@@ -254,11 +246,6 @@
 ** Scroll line by line when reached end of screen.
    #+BEGIN_SRC emacs-lisp
     (setq scroll-conservatively 100)
-   #+END_SRC
-
-** Ignore bell.
-   #+BEGIN_SRC emacs-lisp
-    (setq ring-bell-function 'ignore)
    #+END_SRC
 
 ** When using GUI version, convert symbol text into symbols.
@@ -293,38 +280,86 @@
      (global-set-key (kbd "C-c w l") 'copy-whole-line)
    #+END_SRC
 
-** Show time
+** Not listed.
+
+   Ignore Bell.
    #+BEGIN_SRC emacs-lisp
-  (setq display-time-24hr-format t)
-  (display-time-mode 1)
+    (setq ring-bell-function 'ignore)
+   #+END_SRC
+   
+   Treat _ as a part of word
+   #+BEGIN_SRC emacs-lisp
+   (modify-syntax-entry ?_ "w")
    #+END_SRC
 
-** Not listed.
+   List recently opened files in emacs.
+   #+BEGIN_SRC emacs-lisp
+     (require 'recentf)
+     (recentf-mode 1)
+     (setq recentf-max-menu-items 25)
+
+     ;; Bind to `C-x C-r'.
+     (global-set-key "\C-x\ \C-r" 'recentf-open-files)
+   #+END_SRC
 
    Set relative line numbers in all modes.
    #+BEGIN_SRC emacs-lisp
    (require 'display-line-numbers)
-  (global-display-line-numbers-mode)
-  (setq display-line-numbers-type 'relative)
+   (global-display-line-numbers-mode)
+   (setq display-line-numbers-type 'relative)
+   #+END_SRC
+
+   Indent file with 4 spaces.
+   #+BEGIN_SRC emacs-lisp
+     ;; (setq tab-stop-list (number-sequence 4 200 4))
+
+     (defun my-generate-tab-stops (&optional width max)
+       "Return a sequence suitable for `tab-stop-list'."
+       (let* ((max-column (or max 200))
+              (tab-width (or width tab-width))
+              (count (/ max-column tab-width)))
+         (number-sequence tab-width (* tab-width count) tab-width)))
+
+     (setq tab-width 4)
+     (setq tab-stop-list (my-generate-tab-stops))
+   #+END_SRC
+
+   Show time in mode line
+   #+BEGIN_SRC emacs-lisp
+   (setq display-time-24hr-format t)
+   (display-time-mode 1)
+   #+END_SRC
+
+   Scroll one line up and down by M-n and M-p.
+   #+BEGIN_SRC emacs-lisp
+   (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
+   (global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
+   #+END_SRC
+
+   Keep the cursor on same position on screen (i.e., move in file)
+   while screen is moved up/down through M-n and M-p. By default
+   cursor will remain at same position in file hence will move when
+   moving screen up/down.
+   #+BEGIN_SRC emacs-lisp
+   ;; (setq scroll-preserve-screen-position 1)
    #+END_SRC
 
    Show line and column number on bottom bar.
    #+BEGIN_SRC emacs-lisp
-  (line-number-mode 1)
-  (column-number-mode 1)
+   (line-number-mode 1)
+   (column-number-mode 1)
    #+END_SRC
 
    Set font details: Background, Foreground, Font, Size.
    #+BEGIN_SRC emacs-lisp
-    (set-face-attribute 'default nil :background "black"
-    :foreground "grey" :font "Noto Mono 12")
+   (set-face-attribute 'default nil :background "black"
+   :foreground "grey" :font "Noto Mono 12")
    #+END_SRC
    
    Set transparency when focused and unfocused.
    #+BEGIN_SRC emacs-lisp
-    (set-frame-parameter (selected-frame) 'alpha '(87 80))
-    (add-to-list 'default-frame-alist '(alpha 87 80))
-
+   (set-frame-parameter (selected-frame) 'alpha '(87 80))
+   (add-to-list 'default-frame-alist '(alpha 87 80))
    #+END_SRC
 
 

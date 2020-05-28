@@ -1,6 +1,3 @@
-;; Set font and size.
-(setq default-frame-alist '((font . "Noto Mono 12")))
-
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives

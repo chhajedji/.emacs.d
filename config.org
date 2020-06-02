@@ -13,6 +13,7 @@
 
 * Packages
 
+
 ** Org
 
 *** Org bullets
@@ -64,8 +65,13 @@
   (beacon-mode 1))
    #+END_SRC
 
+** magit
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+	:ensure t)
+#+END_SRC
 ** cscope and tags
-   
+
    Adding cscope database.
    #+BEGIN_SRC emacs-lisp
     (load-file "~/.emacs.d/xcscope.el")
@@ -73,7 +79,8 @@
     (cscope-setup)
     (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
    #+END_SRC
-   
+
+
    Adding TAGS files.
    #+BEGIN_SRC emacs-lisp
      (setq tags-table-list '("~/.cstags_dir/esp-idf/TAGS"))
@@ -90,7 +97,7 @@
    #+END_SRC
 
 ** IDO
-   
+
 
 *** enable ido mode
 
@@ -137,6 +144,23 @@
        :init (evil-mode 1))
      (evil-set-initial-state 'term-mode 'emacs)
    #+END_SRC
+** undofu
+#+BEGIN_SRC emacs-lisp
+;  (use-package undo-fu
+;  :ensure t
+;  :init
+;  ;; This option exists for users who prefer to trade-off undo/redo
+;  ;; functionality with the ability to limit undo to a region. When this
+;  ;; boolean is t, undoing with a selection will use undo within this
+;  ;; region.
+;   (setq undo-fu-allow-undo-in-region 1)
+;  ;; Set keys for evil mode.
+;  (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+;  (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)
+;  (global-unset-key (kbd "C-z"))
+;  (global-set-key (kbd "C-z")   'undo-fu-only-undo)
+;  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+#+END_SRC
 ** switch-window
    #+BEGIN_SRC emacs-lisp
   (use-package switch-window
@@ -180,7 +204,7 @@
       (setq dashboard-banner-logo-title "Welcome to Emacs."))
    #+END_SRC
 
-** diminish   
+** diminish
    Diminish minor modes from mode line.
    #+BEGIN_SRC emacs-lisp
   (use-package diminish
@@ -193,12 +217,12 @@
    #+END_SRC
 ** spaceline
    #+BEGIN_SRC emacs-lisp
-     (use-package spaceline
-       :ensure t
-       :config
-       (require 'spaceline-config)
-       (setq powerline-default-separator (quote arrow))
-       (spaceline-spacemacs-theme))
+;    (use-package spaceline
+;      :ensure t
+;      :config
+;      (require 'spaceline-config)
+;      (setq powerline-default-separator (quote arrow))
+;      (spaceline-spacemacs-theme))
    #+END_SRC
 ** popup-kill-ring
    Interactive pop up for kill history. By default `M-y' switches to previous kills.
@@ -208,17 +232,25 @@
     :bind ("M-y" . popup-kill-ring))
    #+END_SRC
 ** company
+
+   Set company for global mode, i.e., to work in all modes.
    #+BEGIN_SRC emacs-lisp
      (use-package company
        :ensure t
        :init
        (add-hook 'after-init-hook 'global-company-mode)
        :config
-       ;; Set delay and minimum length to start suggestions.
-       (setq company-idle-delay 0)
-       (setq company-minimum-prefix-length 2))
+   #+END_SRC
 
-       ;; Change M-n and M-p bindings to C-n and C-p to navigate in list.
+   Set delay and minimum length to start suggestions.
+   #+BEGIN_SRC emacs-lisp
+       (setq company-idle-delay 1)
+       (setq company-minimum-prefix-length 1))
+   #+END_SRC
+
+   By default M-n and M-p are mapped to navigate in the list. Change
+   M-n and M-p to C-n and C-p.
+   #+BEGIN_SRC emacs-lisp
      (with-eval-after-load 'company
        (define-key company-active-map (kbd "M-n") nil)
        (define-key company-active-map (kbd "M-p") nil)
@@ -259,34 +291,31 @@
     (setq auto-save-default nil)
    #+END_SRC
 
-** kill word (like diw in vim)
-   #+BEGIN_SRC emacs-lisp
-  (defun kill-whole-word()
-    (interactive)
-    (backward-word)
-    (kill-word 1))
-  (global-set-key (kbd "C-c w k") 'kill-whole-word)
-   #+END_SRC
-
-** copy line (like yy in vim)
-   #+BEGIN_SRC emacs-lisp
-     (defun copy-whole-line()
-       (interactive)
-       (save-excursion
-    (kill-new
-     (buffer-substring
-      (point-at-bol)
-      (point-at-eol)))))
-     (global-set-key (kbd "C-c w l") 'copy-whole-line)
-   #+END_SRC
-
 ** Not listed.
+
+
+   Current file name will be displayed in title bar.
+    #+BEGIN_SRC emacs-lisp
+	(setq frame-title-format
+	(list (format "%s %%S: %%j " (system-name))
+	'(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+    #+END_SRC
+
+	Show file name below mode line.
+    #+BEGIN_SRC emacs-lisp
+	(defun show-file-name ()
+	"Show the full path file name in the minibuffer."
+	(interactive)
+	(message (buffer-file-name)))
+
+	(global-set-key (kbd "C-c f") 'show-file-name) ; Or any other key you want
+    #+END_SRC
 
    Ignore Bell.
    #+BEGIN_SRC emacs-lisp
     (setq ring-bell-function 'ignore)
    #+END_SRC
-   
+
    Treat _ as a part of word
    #+BEGIN_SRC emacs-lisp
    (modify-syntax-entry ?_ "w")
@@ -355,11 +384,32 @@
    (set-face-attribute 'default nil :background "black"
    :foreground "grey" :font "Noto Mono 12")
    #+END_SRC
-   
+
    Set transparency when focused and unfocused.
    #+BEGIN_SRC emacs-lisp
    (set-frame-parameter (selected-frame) 'alpha '(87 80))
    (add-to-list 'default-frame-alist '(alpha 87 80))
+   #+END_SRC
+
+   Kill word (like ciw/diw in Vi)
+   #+BEGIN_SRC emacs-lisp
+  (defun kill-whole-word()
+    (interactive)
+    (backward-word)
+    (kill-word 1))
+  (global-set-key (kbd "C-c w k") 'kill-whole-word)
+   #+END_SRC
+
+   Copy line (like yy in vim)
+   #+BEGIN_SRC emacs-lisp
+     (defun copy-whole-line()
+       (interactive)
+       (save-excursion
+    (kill-new
+     (buffer-substring
+      (point-at-bol)
+      (point-at-eol)))))
+     (global-set-key (kbd "C-c w l") 'copy-whole-line)
    #+END_SRC
 
 
@@ -412,7 +462,7 @@
    #+END_SRC
 
 
-* window splitting function
+* Window splitting function
 
   #+BEGIN_SRC emacs-lisp
 

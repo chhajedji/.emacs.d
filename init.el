@@ -49,7 +49,7 @@
      ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (markdown-mode popup-kill-ring diminish spaceline company dashboard rainbow-delimiters switch-window rainbow-mode avy magit evil org-bullets beacon which-key use-package)))
+    (xcscope undo-fu markdown-mode popup-kill-ring diminish spaceline company dashboard rainbow-delimiters switch-window rainbow-mode avy magit evil org-bullets beacon which-key use-package)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

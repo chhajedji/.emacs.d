@@ -74,10 +74,28 @@
 
    Adding cscope database.
    #+BEGIN_SRC emacs-lisp
-    (load-file "~/.emacs.d/xcscope.el")
-    (require 'xcscope)
-    (cscope-setup)
-    (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
+	 (use-package xcscope
+	   :ensure t
+	   :config
+	   (require 'xcscope)
+	   ;; Enable cscope minor mode in all major modes.
+	   (cscope-minor-mode 1)
+	   (load-file "~/.emacs.d/xcscope.el")
+	   (cscope-setup)
+	   (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
+
+	   ;; Unset the default binding C-\
+	   (define-key global-map "\C-\\" nil)
+	   ;; Set easy key bindings to navigate
+	   (define-key global-map "\C-\\a"  'cscope-set-initial-directory)
+	   (define-key global-map "\C-\\i"  'cscope-find-files-including-file)
+	   (define-key global-map "\C-\\c"  'cscope-find-functions-calling-this-function)
+	   (define-key global-map "\C-\\d"  'cscope-find-called-functions)
+	   (define-key global-map "\C-\\e"  'cscope-find-egrep-pattern)
+	   (define-key global-map "\C-\\s"  'cscope-find-this-symbol)
+	   (define-key global-map "\C-\\f"  'cscope-find-this-file)
+	   (define-key global-map "\C-\\g"  'cscope-find-global-definition)
+	   (define-key global-map "\C-\\u"  'cscope-pop-mark))
    #+END_SRC
 
 

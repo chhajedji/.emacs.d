@@ -13,7 +13,6 @@
 
 * Packages
 
-
 ** Org
 
 *** Org bullets
@@ -196,20 +195,12 @@
 
 ** rainbow
 
-*** Enable rainbow mode.
-    #+BEGIN_SRC emacs-lisp
+   Enable rainbow mode.
 
+    #+BEGIN_SRC emacs-lisp
   (use-package rainbow-mode
     :ensure t
     :init (rainbow-mode 1))
-
-    #+END_SRC
-*** Highlight matching brackets.
-    #+BEGIN_SRC emacs-lisp
-  (use-package rainbow-delimiters
-    :ensure t
-    :init
-    (rainbow-delimiters-mode 1))
     #+END_SRC
 
 ** dashboard
@@ -249,70 +240,57 @@
     :ensure t
     :bind ("M-y" . popup-kill-ring))
    #+END_SRC
-** company
-
-   Set company for global mode, i.e., to work in all modes.
-   #+BEGIN_SRC emacs-lisp
-     (use-package company
-       :ensure t
-       :init
-       (add-hook 'after-init-hook 'global-company-mode)
-       :config
-   #+END_SRC
-
-   Set delay and minimum length to start suggestions.
-   #+BEGIN_SRC emacs-lisp
-       (setq company-idle-delay 1)
-       (setq company-minimum-prefix-length 1))
-   #+END_SRC
-
-   By default M-n and M-p are mapped to navigate in the list. Change
-   M-n and M-p to C-n and C-p.
-   #+BEGIN_SRC emacs-lisp
-     (with-eval-after-load 'company
-       (define-key company-active-map (kbd "M-n") nil)
-       (define-key company-active-map (kbd "M-p") nil)
-       (define-key company-active-map (kbd "C-n") #'company-select-next)
-       (define-key company-active-map (kbd "C-p") #'company-select-previous))
-   #+END_SRC
-
 
 * Minor Settings
 
-** Hide toolbar, menubar and scrollbar.
+  Hide toolbar, menubar and scrollbar.
+
    #+BEGIN_SRC emacs-lisp
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+   (tool-bar-mode -1)
+   (menu-bar-mode -1)
+   (scroll-bar-mode -1)
    #+END_SRC
-** Do not show welcome screen on startup.
+
+   Do not show welcome screen on startup.
+
    #+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-screen t)
+   (setq inhibit-startup-screen t)
    #+END_SRC
-** Define alias for yes or no.
+
+   Define alias for yes or no.
+
    #+BEGIN_SRC emacs-lsip
     (defalias 'yes-or-no-p 'y-or-n-p)
    #+END_SRC
-** Scroll line by line when reached end of screen.
+
+   Scroll line by line when reached end of screen.
    #+BEGIN_SRC emacs-lisp
-    (setq scroll-conservatively 100)
+   (setq scroll-conservatively 100)
    #+END_SRC
 
-** When using GUI version, convert symbol text into symbols.
+When using GUI version, convert symbol text into symbols.
+
    #+BEGIN_SRC emacs-lisp
-    (when window-system (global-prettify-symbols-mode t))
+   (when window-system (global-prettify-symbols-mode t))
    #+END_SRC
 
-** Do not create backup and autosave files.
+   Do not create backup and autosave files.
+
    #+BEGIN_SRC emacs-lisp
     (setq make-backup-files nil)
     (setq auto-save-default nil)
    #+END_SRC
 
-** Not listed.
+   Show function name in mode-line for C functions
 
+   #+BEGIN_SRC emacs-lisp
+	 (add-hook 'c-mode-common-hook
+	   (lambda ()
+	     (which-function-mode t)))
+   #+END_SRC
 
    Current file name will be displayed in title bar.
+
     #+BEGIN_SRC emacs-lisp
 	(setq frame-title-format
 	(list (format "%s %%S: %%j " (system-name))
@@ -320,6 +298,7 @@
     #+END_SRC
 
 	Show file name below mode line.
+
     #+BEGIN_SRC emacs-lisp
 	(defun show-file-name ()
 	"Show the full path file name in the minibuffer."
@@ -330,16 +309,19 @@
     #+END_SRC
 
    Ignore Bell.
+
    #+BEGIN_SRC emacs-lisp
     (setq ring-bell-function 'ignore)
    #+END_SRC
 
    Treat _ as a part of word
+
    #+BEGIN_SRC emacs-lisp
    (modify-syntax-entry ?_ "w")
    #+END_SRC
 
    List recently opened files in emacs.
+
    #+BEGIN_SRC emacs-lisp
      (require 'recentf)
      (recentf-mode 1)
@@ -350,6 +332,7 @@
    #+END_SRC
 
    Set relative line numbers in all modes.
+
    #+BEGIN_SRC emacs-lisp
    (require 'display-line-numbers)
    (global-display-line-numbers-mode)
@@ -357,6 +340,7 @@
    #+END_SRC
 
    Indent file with 4 spaces.
+
    #+BEGIN_SRC emacs-lisp
      ;; (setq tab-stop-list (number-sequence 4 200 4))
 
@@ -372,12 +356,14 @@
    #+END_SRC
 
    Show time in mode line
+
    #+BEGIN_SRC emacs-lisp
    (setq display-time-24hr-format t)
    (display-time-mode 1)
    #+END_SRC
 
    Scroll one line up and down by M-n and M-p.
+
    #+BEGIN_SRC emacs-lisp
    (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
    (global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
@@ -387,29 +373,45 @@
    while screen is moved up/down through M-n and M-p. By default
    cursor will remain at same position in file hence will move when
    moving screen up/down.
+
    #+BEGIN_SRC emacs-lisp
    ;; (setq scroll-preserve-screen-position 1)
    #+END_SRC
 
+   Always show matching bracket.
+
+   #+BEGIN_SRC emacs-lisp
+     (show-paren-mode 1)
+     ;; Highlight brackets (default option).
+     (setq show-paren-style 'parenthesis)
+
+     ;; By default, there is a delay in showing matching parenthesis.
+     (setq show-paren-delay 0)
+   #+END_SRC
+
    Show line and column number on bottom bar.
+
    #+BEGIN_SRC emacs-lisp
    (line-number-mode 1)
    (column-number-mode 1)
    #+END_SRC
 
    Set font details: Background, Foreground, Font, Size.
+
    #+BEGIN_SRC emacs-lisp
    (set-face-attribute 'default nil :background "black"
    :foreground "grey" :font "Noto Mono 12")
    #+END_SRC
 
    Set transparency when focused and unfocused.
+
    #+BEGIN_SRC emacs-lisp
    (set-frame-parameter (selected-frame) 'alpha '(87 80))
    (add-to-list 'default-frame-alist '(alpha 87 80))
    #+END_SRC
 
    Kill word (like ciw/diw in Vi)
+
    #+BEGIN_SRC emacs-lisp
   (defun kill-whole-word()
     (interactive)
@@ -419,6 +421,7 @@
    #+END_SRC
 
    Copy line (like yy in vim)
+
    #+BEGIN_SRC emacs-lisp
      (defun copy-whole-line()
        (interactive)
@@ -433,12 +436,14 @@
 
 * Buffers
 
-** Enable ibuffer
+Enable ibuffer
+
    #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-x b") 'ibuffer)
+   (global-set-key (kbd "C-x b") 'ibuffer)
    #+END_SRC
 
-** Kill current buffer
+   Kill current buffer
+
    #+BEGIN_SRC emacs-lisp
      (defun kill-curr-buffer()
        (interactive)
@@ -446,7 +451,8 @@
      (global-set-key (kbd "C-x k") 'kill-curr-buffer)
    #+END_SRC
 
-** Kill all buffers
+Kill all buffers
+
    #+BEGIN_SRC emacs-lisp
   (defun kill-all-buffers()
     (interactive)
@@ -457,33 +463,31 @@
 
 * Config edit/reload
 
-** Edit
+Edit
 
    #+BEGIN_SRC emacs-lisp
-
   (defun config-visit()
     (interactive)
     (find-file "~/.emacs.d/config.org"))
     (global-set-key (kbd "C-c e") 'config-visit)
-
    #+END_SRC
 
-** Reload config.org
+Reload `config.org'
 
    #+BEGIN_SRC emacs-lisp
-
   (defun config-reload()
     (interactive)
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
-
    #+END_SRC
 
 
 * Window splitting function
 
-  #+BEGIN_SRC emacs-lisp
+  Follow window after splitting horizontally or vertically.
+  Default behavior is to just split window and remain in same window.
 
+  #+BEGIN_SRC emacs-lisp
   (defun split-and-follow-horizontally()
     (interactive)
     (split-window-below)
@@ -497,5 +501,4 @@
     (balance-windows)
     (other-window 1))
     (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
-
   #+END_SRC

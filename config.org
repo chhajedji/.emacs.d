@@ -3,7 +3,7 @@
 ** Setting default shell to bash
 
    #+BEGIN_SRC emacs-lisp
-  ;; `ansi-term` will launch bash without prompt.
+  ;; `ansi-term' will launch bash without prompt.
   (defvar my-term-shell "/bin/bash")
   (defadvice ansi-term (before force-bash)
     (interactive (list my-term-shell)))
@@ -234,7 +234,7 @@
 ;      (spaceline-spacemacs-theme))
    #+END_SRC
 ** popup-kill-ring
-   Interactive pop up for kill history. By default `M-y' switches to previous kills.
+   Interactive pop up for kill history. By default ~M-y~ switches to previous kills.
    #+BEGIN_SRC emacs-lisp
   (use-package popup-kill-ring
     :ensure t
@@ -263,7 +263,49 @@
     (defalias 'yes-or-no-p 'y-or-n-p)
    #+END_SRC
 
-   Scroll line by line when reached end of screen.
+   Enable spell check.
+   This will enable spell check in text modes and
+   only for comments in programming mode.
+
+	#+BEGIN_SRC emacs-lisp
+	(add-hook 'text-mode-hook 'flyspell-mode)
+	(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+	#+END_SRC
+
+	Toggle split view. Switch from vertical to horizontal split and
+	vice-versa with same binding. Same as ~C-w L~ and ~C-w J~ in vi.
+
+	#+BEGIN_SRC emacs-lisp
+	  (defun toggle-window-split ()
+		(interactive)
+		(if (= (count-windows) 2)
+			(let* ((this-win-buffer (window-buffer))
+			   (next-win-buffer (window-buffer (next-window)))
+			   (this-win-edges (window-edges (selected-window)))
+			   (next-win-edges (window-edges (next-window)))
+			   (this-win-2nd (not (and (<= (car this-win-edges)
+						   (car next-win-edges))
+						   (<= (cadr this-win-edges)
+						   (cadr next-win-edges)))))
+			   (splitter
+				(if (= (car this-win-edges)
+				   (car (window-edges (next-window))))
+				'split-window-horizontally
+			  'split-window-vertically)))
+		  (delete-other-windows)
+		  (let ((first-win (selected-window)))
+			(funcall splitter)
+			(if this-win-2nd (other-window 1))
+			(set-window-buffer (selected-window) this-win-buffer)
+			(set-window-buffer (next-window) next-win-buffer)
+			(select-window first-win)
+			(if this-win-2nd (other-window 1))))))
+
+	  (global-set-key (kbd "C-x |") 'toggle-window-split)
+	#+END_SRC
+
+	Scroll line by line when reached end of screen.
+
    #+BEGIN_SRC emacs-lisp
    (setq scroll-conservatively 100)
    #+END_SRC
@@ -472,7 +514,7 @@ Edit
     (global-set-key (kbd "C-c e") 'config-visit)
    #+END_SRC
 
-Reload `config.org'
+Reload ~config.org~
 
    #+BEGIN_SRC emacs-lisp
   (defun config-reload()

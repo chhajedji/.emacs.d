@@ -44,6 +44,12 @@
   '("el"  "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
     #+END_SRC
 
+
+    Set indentation for bullets.
+    #+BEGIN_SRC emacs-lisp
+    (setq-default org-list-indent-offset 4)
+    #+END_SRC
+
 ** which-keys
 
    #+BEGIN_SRC emacs-lisp
@@ -65,36 +71,38 @@
    #+END_SRC
 
 ** magit
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package magit
-	:ensure t)
-#+END_SRC
+    :ensure t)
+   #+END_SRC
 ** cscope and tags
 
    Adding cscope database.
    #+BEGIN_SRC emacs-lisp
-	 (use-package xcscope
-	   :ensure t
-	   :config
-	   (require 'xcscope)
-	   ;; Enable cscope minor mode in all major modes.
-	   (cscope-minor-mode 1)
-	   (load-file "~/.emacs.d/xcscope.el")
-	   (cscope-setup)
-	   (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
+     (use-package xcscope
+       :ensure t
+       :config
+       (require 'xcscope)
+       ;; Enable cscope minor mode in all major modes.
+       (cscope-minor-mode 1)
+       (load-file "~/.emacs.d/xcscope.el")
+       (cscope-setup)
+       (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
 
-	   ;; Unset the default binding C-\
-	   (define-key global-map "\C-\\" nil)
-	   ;; Set easy key bindings to navigate
-	   (define-key global-map "\C-\\a"  'cscope-set-initial-directory)
-	   (define-key global-map "\C-\\i"  'cscope-find-files-including-file)
-	   (define-key global-map "\C-\\c"  'cscope-find-functions-calling-this-function)
-	   (define-key global-map "\C-\\d"  'cscope-find-called-functions)
-	   (define-key global-map "\C-\\e"  'cscope-find-egrep-pattern)
-	   (define-key global-map "\C-\\s"  'cscope-find-this-symbol)
-	   (define-key global-map "\C-\\f"  'cscope-find-this-file)
-	   (define-key global-map "\C-\\g"  'cscope-find-global-definition)
-	   (define-key global-map "\C-\\u"  'cscope-pop-mark))
+       ;; Unset the default binding C-\
+       (define-key global-map "\C-\\" nil)
+       ;; Set easy key bindings to navigate
+       (define-key global-map "\C-\\S"  'cscope-tell-user-about-directory)
+       (define-key global-map "\C-\\a"  'cscope-set-initial-directory)
+       (define-key global-map "\C-\\i"  'cscope-find-files-including-file)
+       (define-key global-map "\C-\\c"  'cscope-find-functions-calling-this-function)
+       (define-key global-map "\C-\\d"  'cscope-find-called-functions)
+       (define-key global-map "\C-\\e"  'cscope-find-egrep-pattern)
+       (define-key global-map "\C-\\s"  'cscope-find-this-symbol)
+       (define-key global-map "\C-\\f"  'cscope-find-this-file)
+       (define-key global-map "\C-\\g"  'cscope-find-global-definition)
+       (define-key global-map "\C-\\G"  'cscope-find-global-definition-no-prompting)
+       (define-key global-map "\C-\\u"  'cscope-pop-mark))
    #+END_SRC
 
 
@@ -102,44 +110,31 @@
    #+BEGIN_SRC emacs-lisp
      (setq tags-table-list '("~/.cstags_dir/esp-idf/TAGS"))
    #+END_SRC
-** avy
-
-   #+BEGIN_SRC emacs-lisp
-
-  (use-package avy
-    :ensure t
-    :bind
-    ("M-s" . avy-goto-char))
-
-   #+END_SRC
-
 ** IDO
 
-
 *** enable ido mode
-
+    
     #+BEGIN_SRC emacs-lisp
-  (setq ido-enable-flex-matching nil)
-  (setq ido-create-new-buffer 'always)
-  (setq ido-everywhere 1)
-  (ido-mode 1)
+      (setq ido-enable-flex-matching t)
+      (setq ido-create-new-buffer 'always)
+      (setq ido-everywhere 1)
+      (ido-mode 1)
     #+END_SRC
 
 *** ido-vertical
 
     #+BEGIN_SRC emacs-lisp
-  (use-package ido-vertical-mode
-    :ensure t
-    :init
-    (ido-vertical-mode 1))
-  (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+      (use-package ido-vertical-mode
+        :ensure t
+        :init
+        (ido-vertical-mode 1))
+
+      (setq ido-vertical-define-keys 'C-n-and-C-p-only)
     #+END_SRC
 
 *** switch buffers
     #+BEGIN_SRC emacs-lisp
-
-  (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-
+      (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
     #+END_SRC
 
 ** smex
@@ -154,7 +149,7 @@
 
    #+END_SRC
 
-** evil mode enable
+** evil
    #+BEGIN_SRC emacs-lisp
      (use-package evil
        :ensure t
@@ -162,7 +157,7 @@
      (evil-set-initial-state 'term-mode 'emacs)
    #+END_SRC
 ** undofu
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 ;  (use-package undo-fu
 ;  :ensure t
 ;  :init
@@ -177,7 +172,7 @@
 ;  (global-unset-key (kbd "C-z"))
 ;  (global-set-key (kbd "C-z")   'undo-fu-only-undo)
 ;  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
-#+END_SRC
+   #+END_SRC
 ** switch-window
    #+BEGIN_SRC emacs-lisp
   (use-package switch-window
@@ -197,11 +192,11 @@
 
    Enable rainbow mode.
 
-    #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package rainbow-mode
     :ensure t
     :init (rainbow-mode 1))
-    #+END_SRC
+   #+END_SRC
 
 ** dashboard
    #+BEGIN_SRC emacs-lisp
@@ -224,31 +219,105 @@
     (diminish 'rainbow-mode)
     (diminish 'subword-mode))
    #+END_SRC
-** spaceline
-   #+BEGIN_SRC emacs-lisp
-;    (use-package spaceline
-;      :ensure t
-;      :config
-;      (require 'spaceline-config)
-;      (setq powerline-default-separator (quote arrow))
-;      (spaceline-spacemacs-theme))
-   #+END_SRC
 ** popup-kill-ring
+
    Interactive pop up for kill history. By default ~M-y~ switches to previous kills.
+
    #+BEGIN_SRC emacs-lisp
   (use-package popup-kill-ring
     :ensure t
     :bind ("M-y" . popup-kill-ring))
    #+END_SRC
 
+
 * Minor Settings
 
-  Hide toolbar, menubar and scrollbar.
+** Markdown
+
+   View markdown preview as you edit a markdown file.
+   Source: https://camsaul.com/emacs-lisp/2020/06/09/emacs-lisp-intro-markdown-live-previews-part-1.html
+   #+BEGIN_SRC emacs-lisp
+      (defun cam/-scroll-percentage ()
+    (/ (float (line-number-at-pos (window-start)))
+       (float (line-number-at-pos (point-max)))))
+
+      (defun cam/-set-window-start-to-percentage (scroll-percentage)
+    (goto-char (point-min))
+    (let ((target-line-number (truncate (* (line-number-at-pos (point-max)) scroll-percentage))))
+      (forward-line (1- target-line-number)))
+    (set-window-start nil (point)))
+
+      (defun cam/-render-markdown-preview-current-buffer ()
+    (message "Rendering Markdown preview of %s" buffer-file-name)
+    (shell-command-on-region (point-min) (point-max) "pandoc -f gfm" "*Preview Markdown Output*")
+    (switch-to-buffer-other-window "*Preview Markdown Output*")
+    (let ((document (libxml-parse-html-region (point) (point-max))))
+      (erase-buffer)
+      (shr-insert-document `(base ((href . ,url)) ,document))
+      (setq buffer-read-only t)))
+
+      (defun cam/-preview-markdown-file (filename)
+    (save-selected-window
+      (find-file filename)
+      (let ((url (concat "file://" filename))
+        (scroll-percentage (cam/-scroll-percentage)))
+        (cam/-render-markdown-preview-current-buffer)
+        (cam/-set-window-start-to-percentage scroll-percentage))))
+
+      (defun cam/preview-markdown (&optional filename)
+    "Render a markdown preview of FILENAME (by default, the current file) to HTML and display it with `shr-insert-document'."
+    (interactive "fFile: ")
+    (if filename
+        (progn
+          (cam/-preview-markdown-file filename)
+          (switch-to-buffer (current-buffer)))
+      (cam/-preview-markdown-file buffer-file-name)))
+   #+END_SRC
+
+** General
+
+   Copy file path to clipboard.
+
+   #+BEGIN_SRC emacs-lisp
+     (defun copy-file-name-to-clipboard ()
+       "Put the current file name on the clipboard"
+       (interactive)
+       (let ((filename (if (equal major-mode 'dired-mode)
+                           default-directory
+                         (buffer-file-name))))
+         (when filename
+           (with-temp-buffer
+             (insert filename)
+             (clipboard-kill-region (point-min) (point-max)))
+           (message "%s copied to clipboard." filename ))))
+     (global-set-key (kbd "C-c f c") 'copy-file-name-to-clipboard)
+   #+END_SRC
+
+   Custom grep command
+   #+BEGIN_SRC emacs-lisp
+   (setq grep-command "grep --color -InrH")
+   #+END_SRC
+
+   Hide toolbar, menubar and scrollbar.
 
    #+BEGIN_SRC emacs-lisp
    (tool-bar-mode -1)
    (menu-bar-mode -1)
    (scroll-bar-mode -1)
+   #+END_SRC
+
+   Move around windows with Shift-Arrow
+
+   #+BEGIN_SRC emacs-lisp
+   (windmove-default-keybindings)
+   #+END_SRC
+
+   Set color and syntax highlighting in current line.
+   This will only work if ~hl-line-mode~ or ~global-hl-line-mode~ is set.
+
+   #+BEGIN_SRC emacs-lisp
+   ; (set-face-background 'hl-line "#3e4446")
+   ; (set-face-foreground 'highlight nil)
    #+END_SRC
 
    Do not show welcome screen on startup.
@@ -267,50 +336,50 @@
    This will enable spell check in text modes and
    only for comments in programming mode.
 
-	#+BEGIN_SRC emacs-lisp
-	(add-hook 'text-mode-hook 'flyspell-mode)
-	(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-	#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+    (add-hook 'text-mode-hook 'flyspell-mode)
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+   #+END_SRC
 
-	Toggle split view. Switch from vertical to horizontal split and
-	vice-versa with same binding. Same as ~C-w L~ and ~C-w J~ in vi.
+   Toggle split view. Switch from vertical to horizontal split and
+   vice-versa with same binding. Same as ~C-w L~ and ~C-w J~ in vi.
 
-	#+BEGIN_SRC emacs-lisp
-	  (defun toggle-window-split ()
-		(interactive)
-		(if (= (count-windows) 2)
-			(let* ((this-win-buffer (window-buffer))
-			   (next-win-buffer (window-buffer (next-window)))
-			   (this-win-edges (window-edges (selected-window)))
-			   (next-win-edges (window-edges (next-window)))
-			   (this-win-2nd (not (and (<= (car this-win-edges)
-						   (car next-win-edges))
-						   (<= (cadr this-win-edges)
-						   (cadr next-win-edges)))))
-			   (splitter
-				(if (= (car this-win-edges)
-				   (car (window-edges (next-window))))
-				'split-window-horizontally
-			  'split-window-vertically)))
-		  (delete-other-windows)
-		  (let ((first-win (selected-window)))
-			(funcall splitter)
-			(if this-win-2nd (other-window 1))
-			(set-window-buffer (selected-window) this-win-buffer)
-			(set-window-buffer (next-window) next-win-buffer)
-			(select-window first-win)
-			(if this-win-2nd (other-window 1))))))
+   #+BEGIN_SRC emacs-lisp
+      (defun toggle-window-split ()
+        (interactive)
+        (if (= (count-windows) 2)
+            (let* ((this-win-buffer (window-buffer))
+               (next-win-buffer (window-buffer (next-window)))
+               (this-win-edges (window-edges (selected-window)))
+               (next-win-edges (window-edges (next-window)))
+               (this-win-2nd (not (and (<= (car this-win-edges)
+                           (car next-win-edges))
+                           (<= (cadr this-win-edges)
+                           (cadr next-win-edges)))))
+               (splitter
+                (if (= (car this-win-edges)
+                   (car (window-edges (next-window))))
+                'split-window-horizontally
+              'split-window-vertically)))
+          (delete-other-windows)
+          (let ((first-win (selected-window)))
+            (funcall splitter)
+            (if this-win-2nd (other-window 1))
+            (set-window-buffer (selected-window) this-win-buffer)
+            (set-window-buffer (next-window) next-win-buffer)
+            (select-window first-win)
+            (if this-win-2nd (other-window 1))))))
 
-	  (global-set-key (kbd "C-x |") 'toggle-window-split)
-	#+END_SRC
+      (global-set-key (kbd "C-x |") 'toggle-window-split)
+   #+END_SRC
 
-	Scroll line by line when reached end of screen.
+   Scroll line by line when reached end of screen.
 
    #+BEGIN_SRC emacs-lisp
    (setq scroll-conservatively 100)
    #+END_SRC
 
-When using GUI version, convert symbol text into symbols.
+   When using GUI version, convert symbol text into symbols.
 
    #+BEGIN_SRC emacs-lisp
    (when window-system (global-prettify-symbols-mode t))
@@ -326,29 +395,29 @@ When using GUI version, convert symbol text into symbols.
    Show function name in mode-line for C functions
 
    #+BEGIN_SRC emacs-lisp
-	 (add-hook 'c-mode-common-hook
-	   (lambda ()
-	     (which-function-mode t)))
+     (add-hook 'c-mode-common-hook
+       (lambda ()
+         (which-function-mode t)))
    #+END_SRC
 
    Current file name will be displayed in title bar.
 
-    #+BEGIN_SRC emacs-lisp
-	(setq frame-title-format
-	(list (format "%s %%S: %%j " (system-name))
-	'(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
-    #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+    (setq frame-title-format
+    (list (format "%s %%S: %%j " (system-name))
+    '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+   #+END_SRC
 
-	Show file name below mode line.
+   Show file name below mode line.
 
-    #+BEGIN_SRC emacs-lisp
-	(defun show-file-name ()
-	"Show the full path file name in the minibuffer."
-	(interactive)
-	(message (buffer-file-name)))
+   #+BEGIN_SRC emacs-lisp
+    (defun show-file-name ()
+    "Show the full path file name in the minibuffer."
+    (interactive)
+    (message (buffer-file-name)))
 
-	(global-set-key (kbd "C-c f") 'show-file-name) ; Or any other key you want
-    #+END_SRC
+    (global-set-key (kbd "C-c f s") 'show-file-name)
+   #+END_SRC
 
    Ignore Bell.
 
@@ -370,7 +439,7 @@ When using GUI version, convert symbol text into symbols.
      (setq recentf-max-menu-items 25)
 
      ;; Bind to `C-x C-r'.
-     (global-set-key "\C-x\ \C-r" 'recentf-open-files)
+     (global-set-key "\C-c\ f\ r" 'recentf-open-files)
    #+END_SRC
 
    Set relative line numbers in all modes.
@@ -384,24 +453,17 @@ When using GUI version, convert symbol text into symbols.
    Indent file with 4 spaces.
 
    #+BEGIN_SRC emacs-lisp
-     ;; (setq tab-stop-list (number-sequence 4 200 4))
+     (setq-default
+      ;; Disabling tab mode. This will insert spaces instead of tabs.
+      indent-tabs-mode nil
+      ;;  Setting list for columns to move cursor to next available tab stop.
+      tab-stop-list (number-sequence 4 200 4)
 
-     (defun my-generate-tab-stops (&optional width max)
-       "Return a sequence suitable for `tab-stop-list'."
-       (let* ((max-column (or max 200))
-              (tab-width (or width tab-width))
-              (count (/ max-column tab-width)))
-         (number-sequence tab-width (* tab-width count) tab-width)))
-
-     (setq tab-width 4)
-     (setq tab-stop-list (my-generate-tab-stops))
-   #+END_SRC
-
-   Show time in mode line
-
-   #+BEGIN_SRC emacs-lisp
-   (setq display-time-24hr-format t)
-   (display-time-mode 1)
+      ;; Setting `tab-width' will set how does pressing a TAB will look
+      ;; like. Even though it will be interpreted as `\t', `tab-width'
+      ;; sets what how many columns will be shifted on a TAB press.
+      tab-width 4
+      indent-line-function 'insert-tab)
    #+END_SRC
 
    Scroll one line up and down by M-n and M-p.
@@ -448,8 +510,8 @@ When using GUI version, convert symbol text into symbols.
    Set transparency when focused and unfocused.
 
    #+BEGIN_SRC emacs-lisp
-   (set-frame-parameter (selected-frame) 'alpha '(87 80))
-   (add-to-list 'default-frame-alist '(alpha 87 80))
+   (set-frame-parameter (selected-frame) 'alpha '(87 82))
+   (add-to-list 'default-frame-alist '(alpha 87 82))
    #+END_SRC
 
    Kill word (like ciw/diw in Vi)
@@ -478,50 +540,50 @@ When using GUI version, convert symbol text into symbols.
 
 * Buffers
 
-Enable ibuffer
+  Enable ibuffer
 
-   #+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
    (global-set-key (kbd "C-x b") 'ibuffer)
-   #+END_SRC
+  #+END_SRC
 
-   Kill current buffer
+  Kill current buffer
 
-   #+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
      (defun kill-curr-buffer()
        (interactive)
        (kill-buffer (current-buffer)))
      (global-set-key (kbd "C-x k") 'kill-curr-buffer)
-   #+END_SRC
+  #+END_SRC
 
-Kill all buffers
+  Kill all buffers
 
-   #+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
   (defun kill-all-buffers()
     (interactive)
     (mapc 'kill-buffer (buffer-list)))
   (global-set-key (kbd "C-c k a") 'kill-all-buffers)
-   #+END_SRC
+  #+END_SRC
 
 
 * Config edit/reload
 
-Edit
+  Edit ~\~/.emacs.d/config.org~
 
-   #+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
   (defun config-visit()
     (interactive)
     (find-file "~/.emacs.d/config.org"))
     (global-set-key (kbd "C-c e") 'config-visit)
-   #+END_SRC
+  #+END_SRC
 
-Reload ~config.org~
+  Reload ~config.org~
 
-   #+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
   (defun config-reload()
     (interactive)
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
-   #+END_SRC
+  #+END_SRC
 
 
 * Window splitting function

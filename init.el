@@ -49,7 +49,7 @@
      ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (xcscope undo-fu markdown-mode popup-kill-ring diminish dashboard rainbow-delimiters switch-window rainbow-mode avy magit evil org-bullets beacon which-key use-package)))
+    (idle-highlight-mode idle-highlight-symbol highlight-symbol xcscope markdown-mode popup-kill-ring diminish dashboard rainbow-delimiters switch-window rainbow-mode magit evil org-bullets beacon which-key use-package lua-mode)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

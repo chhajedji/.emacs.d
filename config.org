@@ -1,17 +1,62 @@
-* Terminal
+* Packages
 
-** Setting default shell to bash
+** Idle highlight
 
+   Highlight all occurrences of word under cursor.
    #+BEGIN_SRC emacs-lisp
-  ;; `ansi-term' will launch bash without prompt.
-  (defvar my-term-shell "/bin/bash")
-  (defadvice ansi-term (before force-bash)
-    (interactive (list my-term-shell)))
-  (ad-activate 'ansi-term)
+     (use-package idle-highlight-mode
+       :ensure t
+       :init)
    #+END_SRC
 
+   Add programming mode hook to not annoy user.
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
+   #+END_SRC
 
-* Packages
+**  Company-Irony
+
+   Installation
+   #+BEGIN_SRC emacs-lisp
+     ;; Company
+     (use-package company
+       :ensure t
+       :config
+       (setq company-idle-delay 0)
+       (setq company-minimum-perfix-length 4)
+
+       ;; Setting up company for all modes.
+       (global-company-mode))
+
+     (use-package irony
+       :ensure t
+       :config
+       (add-hook 'c++-mode-hook 'irony-mode)
+       (add-hook 'c-mode-hook 'irony-mode)
+       (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+   #+END_SRC
+
+   Binding ~C-p~ and ~C-n~ and unbinding ~M-n~ and ~M-p~ to scroll in company
+   #+BEGIN_SRC emacs-lisp
+     (with-eval-after-load 'company
+       (define-key company-active-map (kbd "M-n") nil)
+       (define-key company-active-map (kbd "M-p") nil)
+       (define-key company-active-map (kbd "C-n") 'company-select-next)
+       (define-key company-active-map (kbd "C-p") 'company-select-previous))
+   #+END_SRC
+
+   Setting up company-irony
+   #+BEGIN_SRC emacs-lisp
+  (use-package company-irony
+    :ensure t
+    :config
+    (require 'company)
+    (add-to-list 'company-backends 'company-irony))
+
+  (with-eval-after-load 'company
+    (add-hook 'c++-mode-hook 'company-mode)
+    (add-hook 'c-mode-hook 'company-mode))
+   #+END_SRC
 
 ** Org
 
@@ -232,6 +277,31 @@
 
 * Minor Settings
 
+** Terminal
+
+   Setting default shell to bash. Due to this, ~ansi-term~ will not
+   ask which shell to use.
+
+   #+BEGIN_SRC emacs-lisp
+      ;; `ansi-term' will launch bash without prompt.
+      (defvar my-term-shell "/bin/bash")
+      (defadvice ansi-term (before force-bash)
+        (interactive (list my-term-shell)))
+      (ad-activate 'ansi-term)
+   #+END_SRC
+
+   Keybinding to open ~ansi-term~ in a new split.
+
+   #+BEGIN_SRC emacs-lisp
+     (defun cc/split-ansi-term()
+         "Start a ansi-term in a new split."
+       (interactive)
+       (split-window-sensibly)
+       (other-window 1)
+       (ansi-term "bash"))
+     (global-set-key "\C-c\ t" 'cc/split-ansi-term)
+   #+END_SRC
+
 ** Markdown
 
    View markdown preview as you edit a markdown file.
@@ -275,6 +345,27 @@
    #+END_SRC
 
 ** General
+
+   Kill buffer and close split.
+   #+BEGIN_SRC emacs-lisp
+     (defun cc/kill-buf-and-close-split()
+     "Kill current buffer and delete the window."
+         (interactive)
+       (kill-curr-buffer)
+       (delete-window))
+
+     (global-set-key (kbd "C-x K") 'cc/kill-buf-and-close-split)
+   #+END_SRC
+
+   Set trailing faces
+   #+BEGIN_SRC emacs-lisp
+     (setq-default show-trailing-whitespace t)
+   #+END_SRC
+
+   Set scroll margine. Vim's emulation of `scrolloff' or `so'
+   #+BEGIN_SRC emacs-lisp
+     (setq scroll-margin 3)
+   #+END_SRC
 
    Copy file path to clipboard.
 
@@ -464,6 +555,13 @@
       ;; sets what how many columns will be shifted on a TAB press.
       tab-width 4
       indent-line-function 'insert-tab)
+   #+END_SRC
+
+   Indent C code with 4 spaces. By default it is set to 2.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq c-default-style "linux")
+     (setq c-basic-offset 4)
    #+END_SRC
 
    Scroll one line up and down by M-n and M-p.

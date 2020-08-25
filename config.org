@@ -362,6 +362,18 @@
      (setq-default show-trailing-whitespace t)
    #+END_SRC
 
+   Toggle trailing whitespaces
+   #+BEGIN_SRC emacs-lisp
+     (defun cc/toggle-trailing-whitespace()
+     "This function toggles display of trailing whitespaces."
+       (interactive)
+       (setq show-trailing-whitespace (not show-trailing-whitespace))
+       (message "show-trailing-whitespace is set to %s"
+       show-trailing-whitespace))
+
+     (global-set-key (kbd "C-c l w") 'cc/toggle-trailing-whitespace)
+   #+END_SRC
+
    Set scroll margine. Vim's emulation of `scrolloff' or `so'
    #+BEGIN_SRC emacs-lisp
      (setq scroll-margin 3)
@@ -553,7 +565,7 @@
       ;; Setting `tab-width' will set how does pressing a TAB will look
       ;; like. Even though it will be interpreted as `\t', `tab-width'
       ;; sets what how many columns will be shifted on a TAB press.
-      tab-width 4
+      tab-width 8
       indent-line-function 'insert-tab)
    #+END_SRC
 

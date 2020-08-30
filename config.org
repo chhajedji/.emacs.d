@@ -429,10 +429,9 @@
    (setq inhibit-startup-screen t)
    #+END_SRC
 
-   Define alias for yes or no.
-
+   Change all "yes/no" prompt to y/n.
    #+BEGIN_SRC emacs-lsip
-    (defalias 'yes-or-no-p 'y-or-n-p)
+   (fset 'yes-or-no-p 'y-or-n-p)
    #+END_SRC
 
    Enable spell check.

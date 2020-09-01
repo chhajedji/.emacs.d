@@ -26,11 +26,13 @@
      (use-package idle-highlight-mode
        :ensure t
        :init)
+       (idle-highlight-mode)
    #+END_SRC
 
    Add programming mode hook to not annoy user.
    #+BEGIN_SRC emacs-lisp
      (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
+     (add-hook 'prog-mode-hook 'idle-highlight-in-visible-buffers-mode)
    #+END_SRC
 
 **  Company-Irony
@@ -177,7 +179,7 @@
 ** IDO
 
 *** enable ido mode
-    
+
     #+BEGIN_SRC emacs-lisp
       (setq ido-enable-flex-matching t)
       (setq ido-create-new-buffer 'always)
@@ -390,7 +392,12 @@
        (message "show-trailing-whitespace is set to %s"
        show-trailing-whitespace))
 
-     (global-set-key (kbd "C-c l w") 'cc/toggle-trailing-whitespace)
+     (global-set-key (kbd "C-c l w t") 'cc/toggle-trailing-whitespace)
+   #+END_SRC
+
+   Clear all whitespace
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-c l w d") 'whitespace-cleanup)
    #+END_SRC
 
    Set scroll margine. Vim's emulation of `scrolloff' or `so'

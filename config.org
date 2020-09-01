@@ -1,5 +1,24 @@
 * Packages
 
+** Projectile
+
+   Projectile is a project interaction library for Emacs
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t
+       :init)
+       #+END_SRC
+
+   Enable Projectile mode
+   #+BEGIN_SRC emacs-lisp
+   (projectile-mode t)
+   #+END_SRC
+
+   Bind projectile mode to ~C-c p~.
+   #+BEGIN_SRC emacs-lisp
+   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+   #+END_SRC
+
 ** Idle highlight
 
    Highlight all occurrences of word under cursor.

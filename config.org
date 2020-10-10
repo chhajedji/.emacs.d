@@ -378,9 +378,13 @@
      (global-set-key (kbd "C-x K") 'cc/kill-buf-and-close-split)
    #+END_SRC
 
-   Set trailing faces
+   Set trailing faces and disable for ansi-term.
    #+BEGIN_SRC emacs-lisp
      (setq-default show-trailing-whitespace t)
+     (add-hook 'term-mode-hook
+               (lambda ()
+                 (make-local-variable 'show-trailing-whitespace)
+                 (setq show-trailing-whitespace nil)))
    #+END_SRC
 
    Toggle trailing whitespaces
@@ -639,7 +643,7 @@
 
    #+BEGIN_SRC emacs-lisp
    (set-face-attribute 'default nil :background "black"
-   :foreground "grey" :font "Noto Mono 12")
+   :foreground "grey" :font "Monospace 12")
    #+END_SRC
 
    Set transparency when focused and unfocused.

@@ -404,9 +404,13 @@
      (global-set-key (kbd "C-c l w d") 'whitespace-cleanup)
    #+END_SRC
 
-   Set scroll margine. Vim's emulation of `scrolloff' or `so'
+   Set scroll margin. Vim's emulation of ~scrolloff~ or ~so~. Set it to 0 for terminal Set it to 0 for terminal.
    #+BEGIN_SRC emacs-lisp
      (setq scroll-margin 3)
+     (add-hook 'term-mode-hook
+               (lambda ()
+                 (make-local-variable 'scroll-margin)
+                 (setq scroll-margin 0)))
    #+END_SRC
 
    Copy file path to clipboard.

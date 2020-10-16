@@ -1,23 +1,5 @@
 * Packages
 
-** Projectile
-
-   Projectile is a project interaction library for Emacs
-   #+BEGIN_SRC emacs-lisp
-     (use-package projectile
-       :ensure t
-       :init)
-       #+END_SRC
-
-   Enable Projectile mode
-   #+BEGIN_SRC emacs-lisp
-   (projectile-mode t)
-   #+END_SRC
-
-   Bind projectile mode to ~C-c p~.
-   #+BEGIN_SRC emacs-lisp
-   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-   #+END_SRC
 
 ** Idle highlight
 
@@ -32,7 +14,6 @@
    Add programming mode hook to not annoy user.
    #+BEGIN_SRC emacs-lisp
      (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
-     (add-hook 'prog-mode-hook 'idle-highlight-in-visible-buffers-mode)
    #+END_SRC
 
 **  Company-Irony
@@ -141,7 +122,7 @@
   (use-package magit
     :ensure t)
    #+END_SRC
-** cscope and tags
+** cscope
 
    Adding cscope database.
    #+BEGIN_SRC emacs-lisp
@@ -171,11 +152,6 @@
        (define-key global-map "\C-\\u"  'cscope-pop-mark))
    #+END_SRC
 
-
-   Adding TAGS files.
-   #+BEGIN_SRC emacs-lisp
-     (setq tags-table-list '("~/.cstags_dir/esp-idf/TAGS"))
-   #+END_SRC
 ** IDO
 
 *** enable ido mode
@@ -295,6 +271,12 @@
     :bind ("M-y" . popup-kill-ring))
    #+END_SRC
 
+** Theme
+
+   #+BEGIN_SRC emacs-lisp
+     (load-theme 'spacemacs-dark t)
+  #+END_SRC
+
 
 * Minor Settings
 
@@ -366,6 +348,11 @@
    #+END_SRC
 
 ** General
+
+   Enable all disabled commands permanently
+   #+BEGIN_SRC emacs-lisp
+     (setq disabled-command-function nil)
+   #+END_SRC
 
    Kill buffer and close split.
    #+BEGIN_SRC emacs-lisp
@@ -581,9 +568,9 @@
    Set relative line numbers in all modes.
 
    #+BEGIN_SRC emacs-lisp
-   (require 'display-line-numbers)
-   (global-display-line-numbers-mode)
-   (setq display-line-numbers-type 'relative)
+     (require 'display-line-numbers)
+     (global-display-line-numbers-mode t)
+     (setq display-line-numbers-type 'relative)
    #+END_SRC
 
    Indent file with 4 spaces.
@@ -653,8 +640,7 @@
    Set transparency when focused and unfocused.
 
    #+BEGIN_SRC emacs-lisp
-   (set-frame-parameter (selected-frame) 'alpha '(87 82))
-   (add-to-list 'default-frame-alist '(alpha 87 82))
+     (set-frame-parameter (selected-frame) 'alpha '(100 87))
    #+END_SRC
 
    Kill word (like ciw/diw in Vi)

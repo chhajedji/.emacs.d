@@ -32,8 +32,6 @@
  '(custom-safe-themes
    (quote
     ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
- '(display-line-numbers-type (quote relative))
- '(global-display-line-numbers-mode t)
  '(hl-todo-keyword-faces
    (quote
     (("TODO" . "#dc752f")
@@ -53,13 +51,6 @@
      ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (idle-highlight-mode idle-highlight-symbol highlight-symbol spaceline yaml-mode xcscope undo-fu markdown-mode popup-kill-ring diminish dashboard rainbow-delimiters switch-window rainbow-mode magit evil org-bullets beacon which-key use-package lua-mode)))
- '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e"))))
-(put 'narrow-to-region 'disabled nil)
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+    (smex ido-vertical-mode company-irony irony company spacemacs-theme idle-highlight-mode idle-highlight-symbol highlight-symbol spaceline yaml-mode xcscope undo-fu markdown-mode popup-kill-ring diminish dashboard rainbow-delimiters switch-window rainbow-mode magit evil org-bullets beacon which-key use-package lua-mode)))
+ '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
+ '(window-divider-mode nil))

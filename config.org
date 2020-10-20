@@ -1,3 +1,34 @@
+* Theme
+
+  Initialize theme at start, so that any other visual changes won't be
+  overridden by default theme changes.
+
+  Function to disable all applied themes.
+  #+BEGIN_SRC emacs-lisp
+    (defun cc/disable-all-themes ()
+      "Disable all active themes."
+      (interactive)
+      (dolist (i custom-enabled-themes)
+        (disable-theme i)))
+  #+END_SRC
+
+  Add advice to ~load-theme~ to disable all themes before loading new theme.
+  #+BEGIN_SRC emacs-lisp
+    ;; (defadvice load-theme (before disable-themes-first activate)
+    ;;   (cc/disable-all-themes))
+  #+END_SRC
+
+  Load a theme.
+   #+BEGIN_SRC emacs-lisp
+     (cc/disable-all-themes)
+       ;; (use-package afternoon-theme
+       ;;   :ensure t
+       ;;   :init)
+       ;; (load-theme 'afternoon t)
+       (load-theme 'spacemacs-dark t)
+  #+END_SRC
+
+
 * Packages
 
 
@@ -145,6 +176,7 @@
        (define-key global-map "\C-\\c"  'cscope-find-functions-calling-this-function)
        (define-key global-map "\C-\\d"  'cscope-find-called-functions)
        (define-key global-map "\C-\\e"  'cscope-find-egrep-pattern)
+       (define-key global-map "\C-\\t"  'cscope-find-this-text-string)
        (define-key global-map "\C-\\s"  'cscope-find-this-symbol)
        (define-key global-map "\C-\\f"  'cscope-find-this-file)
        (define-key global-map "\C-\\g"  'cscope-find-global-definition)
@@ -271,11 +303,6 @@
     :bind ("M-y" . popup-kill-ring))
    #+END_SRC
 
-** Theme
-
-   #+BEGIN_SRC emacs-lisp
-     (load-theme 'spacemacs-dark t)
-  #+END_SRC
 
 
 * Minor Settings
@@ -633,14 +660,13 @@
    Set font details: Background, Foreground, Font, Size.
 
    #+BEGIN_SRC emacs-lisp
-   (set-face-attribute 'default nil :background "black"
-   :foreground "grey" :font "Monospace 12")
+     (set-face-attribute 'default nil :font "Monospace 12")
    #+END_SRC
 
    Set transparency when focused and unfocused.
 
    #+BEGIN_SRC emacs-lisp
-     (set-frame-parameter (selected-frame) 'alpha '(100 87))
+     (set-frame-parameter (selected-frame) 'alpha '(100 82))
    #+END_SRC
 
    Kill word (like ciw/diw in Vi)

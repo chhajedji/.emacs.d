@@ -376,6 +376,11 @@
 
 ** General
 
+   Global line highlight mode keybinding.
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-c l h") 'global-hl-line-mode)
+   #+END_SRC
+
    Enable all disabled commands permanently
    #+BEGIN_SRC emacs-lisp
      (setq disabled-command-function nil)

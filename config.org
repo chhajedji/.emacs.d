@@ -39,7 +39,7 @@
      (use-package idle-highlight-mode
        :ensure t
        :init)
-       (idle-highlight-mode)
+     (idle-highlight-mode t)
    #+END_SRC
 
    Add programming mode hook to not annoy user.
@@ -47,7 +47,7 @@
      (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
    #+END_SRC
 
-**  Company-Irony
+** Company-Irony
 
    Installation
    #+BEGIN_SRC emacs-lisp

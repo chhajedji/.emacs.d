@@ -406,13 +406,16 @@
      (global-set-key (kbd "C-x K") 'cc/kill-buf-and-close-split)
    #+END_SRC
 
-   Set trailing faces and disable for ansi-term.
+   Set trailing faces and disable them for terminals.
    #+BEGIN_SRC emacs-lisp
      (setq-default show-trailing-whitespace t)
-     (add-hook 'term-mode-hook
-               (lambda ()
-                 (make-local-variable 'show-trailing-whitespace)
-                 (setq show-trailing-whitespace nil)))
+     (defun cc/no-ws-in-terminal ()
+       (make-local-variable 'show-trailing-whitespace)
+       (setq show-trailing-whitespace nil))
+
+     ;; Add this function to all major modes hook.
+     (add-hook 'term-mode-hook 'cc/no-ws-in-terminal)
+     (add-hook 'eshell-mode-hook 'cc/no-ws-in-terminal)
    #+END_SRC
 
    Toggle trailing whitespaces

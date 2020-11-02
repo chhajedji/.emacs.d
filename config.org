@@ -376,6 +376,15 @@
 
 ** General
 
+   Quit ansi-term without confirming to kill running process.
+   #+BEGIN_SRC emacs-lisp
+     (defun set-no-process-query-on-exit ()
+       (let ((proc (get-buffer-process (current-buffer))))
+         (when (processp proc)
+           (set-process-query-on-exit-flag proc nil))))
+
+     (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
+   #+END_SRC
    Global line highlight mode keybinding.
    #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-c l h") 'global-hl-line-mode)

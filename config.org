@@ -32,6 +32,21 @@
 * Packages
 
 
+
+** Projectile
+
+   Navigation in various projects.
+   Guide: https://docs.projectile.mx/projectile/index.html
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t
+       :config
+       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+       (projectile-mode +1))
+
+   #+END_SRC
+
 ** Idle highlight
 
    Highlight all occurrences of word under cursor.
@@ -264,12 +279,14 @@
 
 ** rainbow
 
-   Enable rainbow mode.
+   Use this minor mode when you need to visualize the colors written
+   in #ABCDEF format.
 
    #+BEGIN_SRC emacs-lisp
-  (use-package rainbow-mode
-    :ensure t
-    :init (rainbow-mode 1))
+       (use-package rainbow-mode
+         :ensure t
+         :init
+         (rainbow-mode 0))
    #+END_SRC
 
 ** dashboard

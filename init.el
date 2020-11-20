@@ -57,7 +57,7 @@
  '(main-line-color2 "#333343")
  '(package-selected-packages
    (quote
-    (smex ido-vertical-mode company-irony irony company idle-highlight-mode idle-highlight-symbol highlight-symbol spaceline yaml-mode xcscope undo-fu markdown-mode popup-kill-ring diminish dashboard rainbow-delimiters switch-window rainbow-mode magit evil org-bullets beacon which-key use-package lua-mode)))
+    (helm smex ido-vertical-mode company-irony irony company idle-highlight-mode idle-highlight-symbol highlight-symbol spaceline yaml-mode xcscope undo-fu markdown-mode popup-kill-ring diminish dashboard rainbow-delimiters switch-window rainbow-mode magit evil org-bullets beacon which-key use-package lua-mode)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343")

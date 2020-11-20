@@ -31,8 +31,6 @@
 
 * Packages
 
-
-
 ** Projectile
 
    Navigation in various projects.
@@ -108,8 +106,7 @@
 
 ** Org
 
-*** Org bullets
-
+   Org bullets
     #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
     :ensure t
@@ -122,7 +119,7 @@
       nil)))
     #+END_SRC
 
-*** Source window split disable
+    Source window split disable
     #+BEGIN_SRC emacs-lisp
       ;; Hitting C-' to edit code in org mode will change current window
       ;; rather than splitting a new window.
@@ -130,7 +127,7 @@
 
     #+END_SRC
 
-*** Emacs lisp template shortcut
+    Emacs lisp template shortcut
     #+BEGIN_SRC emacs-lisp
   ;; Type "<el <TAB>" and emacs-lisp template will auto reload!
   (add-to-list 'org-structure-template-alist
@@ -164,6 +161,7 @@
    #+END_SRC
 
 ** magit
+
    #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t)

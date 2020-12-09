@@ -35,6 +35,7 @@
  '(evil-undo-system nil)
  '(fci-rule-color "#2e2e2e")
  '(fringe-mode 10 nil (fringe))
+ '(global-hl-line-mode nil)
  '(hl-todo-keyword-faces
    (quote
     (("TODO" . "#dc752f")
@@ -52,6 +53,7 @@
      ("FIXME" . "#dc752f")
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f"))))
+ '(idle-highlight-exceptions (quote ("")))
  '(linum-format " %6d ")
  '(main-line-color1 "#222232")
  '(main-line-color2 "#333343")

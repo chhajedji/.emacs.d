@@ -739,7 +739,7 @@
    Set transparency when focused and unfocused.
 
    #+BEGIN_SRC emacs-lisp
-     (set-frame-parameter (selected-frame) 'alpha '(100 82))
+     (set-frame-parameter (selected-frame) 'alpha '(100 92))
    #+END_SRC
 
    Kill word (like ciw/diw in Vi)
@@ -765,13 +765,12 @@
      (global-set-key (kbd "C-c w l") 'copy-whole-line)
    #+END_SRC
 
-
-* Buffers
+** Buffers
 
   Enable ibuffer
 
   #+BEGIN_SRC emacs-lisp
-   (global-set-key (kbd "C-x b") 'ibuffer)
+    (global-set-key (kbd "C-x b") 'ibuffer)
   #+END_SRC
 
   Kill current buffer
@@ -792,8 +791,7 @@
   (global-set-key (kbd "C-c k a") 'kill-all-buffers)
   #+END_SRC
 
-
-* Config edit/reload
+** Config edit/reload
 
   Edit ~\~/.emacs.d/config.org~
 

@@ -235,12 +235,23 @@
    #+END_SRC
 
 ** evil
+
+   Initialize Evil mode.
    #+BEGIN_SRC emacs-lisp
      (use-package evil
        :ensure t
        :init (evil-mode 1))
      (evil-set-initial-state 'term-mode 'emacs)
    #+END_SRC
+
+*** Evil key bindings
+
+    Press TAB in markdown mode to toggle heading.
+    #+BEGIN_SRC emacs-lisp
+      (evil-define-key 'normal markdown-mode-map
+        (kbd "TAB") 'markdown-cycle)
+    #+END_SRC
+
 ** undofu
    #+BEGIN_SRC emacs-lisp
 ;  (use-package undo-fu

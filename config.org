@@ -684,7 +684,26 @@
    #+BEGIN_SRC emacs-lisp
      (require 'display-line-numbers)
      (global-display-line-numbers-mode t)
-     (setq display-line-numbers-type 'relative)
+     (setq display-line-numbers 'relative)
+   #+END_SRC
+
+   Switch line numbers between relative and absolute.
+
+   #+BEGIN_SRC emacs-lisp
+     (defun cc/toggle-line-numbering ()
+       "Switch line numbering between absolute and relative."
+       (interactive)
+
+       (if (eq display-line-numbers 'relative)
+           (setq display-line-numbers t)
+         (setq display-line-numbers 'relative))
+
+       ;; Lisp Hacking: Same functionality can be achieved with this snippet also.
+       ;; (setq display-line-numbers (if (eq display-line-numbers 'relative) t 'relative))
+       )
+
+     ;; Set key binding to toggle line number mode.
+     (global-set-key (kbd "C-c a") 'cc/toggle-line-numbering)
    #+END_SRC
 
    Indent file with 4 spaces.

@@ -21,11 +21,11 @@
   Load a theme.
    #+BEGIN_SRC emacs-lisp
      (cc/disable-all-themes)
-       ;; (use-package afternoon-theme
-       ;;   :ensure t
-       ;;   :init)
-       ;; (load-theme 'afternoon t)
-       (load-theme 'spacemacs-dark t)
+     ;; (use-package afternoon-theme
+     ;;   :ensure t
+     ;;   :init)
+     ;; (load-theme 'afternoon t)
+     (load-theme 'spacemacs-dark t)
   #+END_SRC
 
 
@@ -309,13 +309,21 @@
 ** diminish
    Diminish minor modes from mode line.
    #+BEGIN_SRC emacs-lisp
-  (use-package diminish
-    :ensure t
-    :init
-    (diminish 'beacon-mode)
-    (diminish 'which-key-mode)
-    (diminish 'rainbow-mode)
-    (diminish 'subword-mode))
+     (use-package diminish
+       :ensure t
+       :init
+       (diminish 'beacon-mode)
+       (diminish 'which-key-mode)
+       (diminish 'rainbow-mode)
+       (diminish 'subword-mode)
+       (diminish 'helm-mode)
+       (diminish 'projectile-mode)
+       (diminish 'irony-mode)
+       (diminish 'company-mode)
+       (diminish 'flyspell-mode)
+       (diminish 'hi-lock-mode)
+       (diminish 'auto-revert-mode)
+       )
    #+END_SRC
 ** popup-kill-ring
 
@@ -441,6 +449,11 @@
    #+END_SRC
 
 ** General
+
+   Change yes/no question to y/n
+   #+BEGIN_SRC emacs-lisp
+     (defalias 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
 
    ESC to be used as keyboard-quit (C-g)
    #+BEGIN_SRC emacs-lisp

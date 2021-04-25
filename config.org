@@ -28,7 +28,6 @@
      (load-theme 'spacemacs-dark t)
   #+END_SRC
 
-
 * Packages
 ** Projectile
 
@@ -306,16 +305,6 @@
          (rainbow-mode 0))
    #+END_SRC
 
-** dashboard
-   #+BEGIN_SRC emacs-lisp
-    (use-package dashboard
-      :ensure t
-      :config
-      (dashboard-setup-startup-hook)
-      (setq dashboard-items '((recents . 10)))
-      (setq dashboard-banner-logo-title "Welcome to Emacs."))
-   #+END_SRC
-
 ** diminish
    Diminish minor modes from mode line.
    #+BEGIN_SRC emacs-lisp
@@ -331,7 +320,6 @@
        (diminish 'irony-mode)
        (diminish 'company-mode)
        (diminish 'flyspell-mode)
-       (diminish 'hi-lock-mode)
        (diminish 'auto-revert-mode)
        )
    #+END_SRC
@@ -387,7 +375,6 @@
      ;; Show kill ring, pick something to paste
      (global-set-key (kbd "M-y") 'helm-show-kill-ring)
    #+END_SRC
-
 
 * Minor Settings
 
@@ -849,7 +836,7 @@
 
 ** Config edit/reload
 
-  Edit ~\~/.emacs.d/config.org~
+  Edit ~~/.emacs.d/config.org~
 
   #+BEGIN_SRC emacs-lisp
   (defun config-visit()
@@ -866,7 +853,6 @@
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
   #+END_SRC
-
 
 * Window splitting function
 

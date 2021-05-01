@@ -30,7 +30,6 @@
 
 
 * Packages
-
 ** Projectile
 
    Navigation in various projects.
@@ -108,19 +107,6 @@
 
 ** Org
 
-   Org bullets
-    #+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-    :ensure t
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
-
-  (add-hook 'shell-mode-hook
-    (lambda ()
-      (face-remap-set-base 'comint-highlight-prompt :inherit
-      nil)))
-    #+END_SRC
-
     Source window split disable
     #+BEGIN_SRC emacs-lisp
       ;; Hitting C-' to edit code in org mode will change current window
@@ -141,7 +127,31 @@
     #+BEGIN_SRC emacs-lisp
     (setq-default org-list-indent-offset 4)
     #+END_SRC
+  ;; Set faces for heading levels
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
+** Org bullets
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-bullets
+        :ensure t
+        :config
+        (add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
+        :custom
+        (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+      (add-hook 'shell-mode-hook
+                (lambda ()
+                  (face-remap-set-base 'comint-highlight-prompt :inherit
+                                       nil)))
+    #+END_SRC
 ** which-keys
 
    #+BEGIN_SRC emacs-lisp

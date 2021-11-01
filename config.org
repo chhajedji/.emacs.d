@@ -14,13 +14,13 @@
 
   Add advice to ~load-theme~ to disable all themes before loading new theme.
   #+BEGIN_SRC emacs-lisp
-    ;; (defadvice load-theme (before disable-themes-first activate)
-    ;;   (cc/disable-all-themes))
+    (defadvice load-theme (before disable-themes-first activate)
+      (cc/disable-all-themes))
   #+END_SRC
 
-  Load a theme.
+  Load a theme at restart.
    #+BEGIN_SRC emacs-lisp
-     (cc/disable-all-themes)
+     ;; (cc/disable-all-themes)
      ;; (use-package afternoon-theme
      ;;   :ensure t
      ;;   :init)
@@ -111,7 +111,7 @@
       ;; Hitting C-' to edit code in org mode will change current window
       ;; rather than splitting a new window.
       (setq org-src-window-setup 'current-window)
-
+      (setq org-ellipsis " ▾")
     #+END_SRC
 
     Emacs lisp template shortcut
@@ -177,36 +177,37 @@
   (use-package magit
     :ensure t)
    #+END_SRC
+
 ** cscope
 
-   Adding cscope database.
-   #+BEGIN_SRC emacs-lisp
-     (use-package xcscope
-       :ensure t
-       :config
-       (require 'xcscope)
-       ;; Enable cscope minor mode in all major modes.
-       (cscope-minor-mode 1)
-       (load-file "~/.emacs.d/xcscope.el")
-       (cscope-setup)
-       (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
+Adding cscope database.
+#+BEGIN_SRC emacs-lisp
+    (use-package xcscope
+    :ensure t
+    :config
+    (require 'xcscope)
+    ;; Enable cscope minor mode in all major modes.
+    (cscope-minor-mode 1)
+    (load-file "~/.emacs.d/xcscope.el")
+    (cscope-setup)
+    (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
 
-       ;; Unset the default binding C-\
-       (define-key global-map "\C-\\" nil)
-       ;; Set easy key bindings to navigate
-       (define-key global-map "\C-\\S"  'cscope-tell-user-about-directory)
-       (define-key global-map "\C-\\a"  'cscope-set-initial-directory)
-       (define-key global-map "\C-\\i"  'cscope-find-files-including-file)
-       (define-key global-map "\C-\\c"  'cscope-find-functions-calling-this-function)
-       (define-key global-map "\C-\\d"  'cscope-find-called-functions)
-       (define-key global-map "\C-\\e"  'cscope-find-egrep-pattern)
-       (define-key global-map "\C-\\t"  'cscope-find-this-text-string)
-       (define-key global-map "\C-\\s"  'cscope-find-this-symbol)
-       (define-key global-map "\C-\\f"  'cscope-find-this-file)
-       (define-key global-map "\C-\\g"  'cscope-find-global-definition)
-       (define-key global-map "\C-\\G"  'cscope-find-global-definition-no-prompting)
-       (define-key global-map "\C-\\u"  'cscope-pop-mark))
-   #+END_SRC
+    ;; Unset the default binding C-\
+    (define-key global-map "\C-\\" nil)
+    ;; Set easy key bindings to navigate
+    (define-key global-map "\C-\\S"  'cscope-tell-user-about-directory)
+    (define-key global-map "\C-\\a"  'cscope-set-initial-directory)
+    (define-key global-map "\C-\\i"  'cscope-find-files-including-file)
+    (define-key global-map "\C-\\c"  'cscope-find-functions-calling-this-function)
+    (define-key global-map "\C-\\d"  'cscope-find-called-functions)
+    (define-key global-map "\C-\\e"  'cscope-find-egrep-pattern)
+    (define-key global-map "\C-\\t"  'cscope-find-this-text-string)
+    (define-key global-map "\C-\\s"  'cscope-find-this-symbol)
+    (define-key global-map "\C-\\f"  'cscope-find-this-file)
+    (define-key global-map "\C-\\g"  'cscope-find-global-definition)
+    (define-key global-map "\C-\\G"  'cscope-find-global-definition-no-prompting)
+    (define-key global-map "\C-\\u"  'cscope-pop-mark))
+#+END_SRC
 
 ** IDO
 
@@ -575,7 +576,7 @@
    #+END_SRC
 
    Change all "yes/no" prompt to y/n.
-   #+BEGIN_SRC emacs-lsip
+   #+BEGIN_SRC emacs-lisp
    (fset 'yes-or-no-p 'y-or-n-p)
    #+END_SRC
 
@@ -854,23 +855,23 @@
   (global-set-key (kbd "C-c r") 'config-reload)
   #+END_SRC
 
-* Window splitting function
+** Window splitting function
 
-  Follow window after splitting horizontally or vertically.
-  Default behavior is to just split window and remain in same window.
+   Follow window after splitting horizontally or vertically.
+   Default behavior is to just split window and remain in same window.
 
-  #+BEGIN_SRC emacs-lisp
-  (defun split-and-follow-horizontally()
-    (interactive)
-    (split-window-below)
-    (balance-windows)
-    (other-window 1))
-    (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+   #+BEGIN_SRC emacs-lisp
+   (defun split-and-follow-horizontally()
+     (interactive)
+     (split-window-below)
+     (balance-windows)
+     (other-window 1))
+     (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
 
-  (defun split-and-follow-vertically()
-    (interactive)
-    (split-window-right)
-    (balance-windows)
-    (other-window 1))
-    (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
-  #+END_SRC
+   (defun split-and-follow-vertically()
+     (interactive)
+     (split-window-right)
+     (balance-windows)
+     (other-window 1))
+     (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+   #+END_SRC

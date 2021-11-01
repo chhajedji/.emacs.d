@@ -448,10 +448,29 @@ Adding cscope database.
 
 ** General
 
+   Enable word wrap
+   #+BEGIN_SRC emacs-lisp
+     (setq word-wrap t)
+   #+END_SRC
+
+   Auto-fill for text mode (Basically, insert new line after defined characters in the given line.)
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'text-mode-hook
+               (auto-fill-mode)
+               (setq set-fill-coloumn 70))
+   #+END_SRC
+
    Change yes/no question to y/n
    #+BEGIN_SRC emacs-lisp
      (defalias 'yes-or-no-p 'y-or-n-p)
    #+END_SRC
+
+   Switch to result buffer after running ~rgrep~
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'grep-mode-hook
+            '(lambda ()
+               (switch-to-buffer-other-window "*grep*")))
+#+END_SRC
 
    ESC to be used as keyboard-quit (C-g)
    #+BEGIN_SRC emacs-lisp

@@ -49,15 +49,15 @@
 
    Highlight all occurrences of word under cursor.
    #+BEGIN_SRC emacs-lisp
-     (use-package idle-highlight-mode
-       :ensure t
-       :init)
-     (idle-highlight-mode t)
+     ;; (use-package idle-highlight-mode
+     ;;   :ensure t
+     ;;   :init)
+     ;; (idle-highlight-mode t)
    #+END_SRC
 
    Add programming mode hook to not annoy user.
    #+BEGIN_SRC emacs-lisp
-     (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
+     ;; (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
    #+END_SRC
 
 ** Company-Irony
@@ -116,11 +116,11 @@
 
     Emacs lisp template shortcut
     #+BEGIN_SRC emacs-lisp
-  ;; Type "<el <TAB>" and emacs-lisp template will auto reload!
-  (add-to-list 'org-structure-template-alist
-  '("el"  "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+      ;; Type "<el <TAB>" and emacs-lisp template will auto reload!
+      (add-to-list 'org-structure-template-alist
+      ;; '("el"  "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+      '("el" . "src emacs-lisp"))
     #+END_SRC
-
 
     Set indentation for bullets.
     #+BEGIN_SRC emacs-lisp
@@ -448,6 +448,11 @@ Adding cscope database.
 
 ** General
 
+   Truncate lines to next line.
+    #+BEGIN_SRC emacs-lisp
+      (setq truncate-lines nil)
+    #+END_SRC
+
    Enable word wrap
    #+BEGIN_SRC emacs-lisp
      (setq word-wrap t)
@@ -705,7 +710,7 @@ Adding cscope database.
      (recentf-mode 1)
      (setq recentf-max-menu-items 25)
 
-     ;; Bind to `C-x C-r'.
+     ;; Bind to `C-c f r'.
      (global-set-key "\C-c\ f\ r" 'recentf-open-files)
    #+END_SRC
 

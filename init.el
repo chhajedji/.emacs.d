@@ -30,16 +30,14 @@
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(custom-enabled-themes nil)
  '(custom-safe-themes
-   (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(evil-undo-system nil)
  '(fci-rule-color "#2e2e2e")
  '(fringe-mode 10 nil (fringe))
  '(global-hl-line-mode nil)
- '(helm-completion-style (quote emacs))
+ '(helm-completion-style 'emacs)
  '(hl-todo-keyword-faces
-   (quote
-    (("TODO" . "#dc752f")
+   '(("TODO" . "#dc752f")
      ("NEXT" . "#dc752f")
      ("THEM" . "#2d9574")
      ("PROG" . "#4f97d7")
@@ -53,21 +51,19 @@
      ("TEMP" . "#b1951d")
      ("FIXME" . "#dc752f")
      ("XXX+" . "#dc752f")
-     ("\\?\\?\\?+" . "#dc752f"))))
- '(idle-highlight-exceptions (quote ("")))
+     ("\\?\\?\\?+" . "#dc752f")))
+ '(idle-highlight-exceptions '(""))
  '(linum-format " %6d ")
  '(main-line-color1 "#222232")
  '(main-line-color2 "#333343")
  '(package-selected-packages
-   (quote
-    (php-mode afternoon-theme projectile helm smex ido-vertical-mode company-irony irony company idle-highlight-mode idle-highlight-symbol highlight-symbol spaceline yaml-mode xcscope undo-fu markdown-mode popup-kill-ring diminish rainbow-delimiters switch-window rainbow-mode magit evil org-bullets beacon which-key use-package lua-mode)))
- '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
+   '(lsp-sourcekit php-mode lua-mode afternoon-theme projectile helm smex ido-vertical-mode company-irony irony company idle-highlight-mode idle-highlight-symbol highlight-symbol spaceline yaml-mode xcscope undo-fu markdown-mode popup-kill-ring diminish rainbow-delimiters switch-window rainbow-mode magit evil org-bullets beacon which-key use-package lua-mode))
+ '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343")
  '(vc-annotate-background "#3b3b3b")
  '(vc-annotate-color-map
-   (quote
-    ((20 . "#dd5542")
+   '((20 . "#dd5542")
      (40 . "#CC5542")
      (60 . "#fb8512")
      (80 . "#baba36")
@@ -84,7 +80,7 @@
      (300 . "#528fd1")
      (320 . "#5180b3")
      (340 . "#6380b3")
-     (360 . "#DC8CC3"))))
+     (360 . "#DC8CC3")))
  '(vc-annotate-very-old-color "#DC8CC3")
  '(window-divider-mode nil))
 (custom-set-faces

@@ -1,0 +1,21 @@
+* Emacs Config 2.0
+
+Better than the [[xhttps://github.com/chhajedji/.emacs.d][original 1.0]] in some aspects. 1.0 was a monopoly of
+[[https://youtube.com/playlist?list=PLX2044Ew-UVVv31a0-Qn3dA6Sd_-NyA1n][Uncle Dave's tutorials]]. 2.0 uses the power from the vast internet and
+configuration knowledge is not restricted by some Uncle Dave.
+
+Here we go with the config...
+
+Firstly Install [[https://melpa.org/#/][MELPA]], which is a better package maanger for
+Emacs. Better in a way that it offers tons of more packages and to be
+honest, [[https://elpa.gnu.org/][ELPA]], the default ones are not even useful. To install MELPA, add
+following snippet at the starting of your [[./init.el][init.el]].
+
+#+begin_emacs-lisp
+(require 'package)
+;; Any add to list for package-archives (to add marmalade or melpa) goes here
+(add-to-list 'package-archives 
+    '("MELPA" .
+      "http://melpa.org/packages/"))
+(package-initialize)
+#+end_emacs-lisp

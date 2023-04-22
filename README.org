@@ -1,6 +1,6 @@
 * Emacs Config 2.0
 
-Better than the [[xhttps://github.com/chhajedji/.emacs.d][original 1.0]] in some aspects. 1.0 was a monopoly of
+Better than the [[https://github.com/chhajedji/.emacs.d/tree/1.0][original 1.0]] in some aspects. 1.0 was a monopoly of
 [[https://youtube.com/playlist?list=PLX2044Ew-UVVv31a0-Qn3dA6Sd_-NyA1n][Uncle Dave's tutorials]]. 2.0 uses the power from the vast internet and
 configuration knowledge is not restricted by some Uncle Dave.
 

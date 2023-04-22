@@ -1,3 +1,25 @@
+* Packages
+
+** Org Mode
+
+Check if ORG Mode is not installed and install it.
+
+#+begin_src emacs-lisp
+(unless (package-installed-p 'org)
+  (package-refresh-contents)
+  (package-install 'org))
+#+end_src
+
+** which-keys
+
+#+begin_src emacs-lisp
+(unless (package-installed-p 'which-key)
+(package-refresh-contents)
+(package-install 'which-key))
+#+end_src
+
+* Theme
+
 * Genral
 
 ** Appearance

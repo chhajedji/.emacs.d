@@ -1,33 +1,67 @@
 * Packages
 
-** Org Mode
+Refresh contents of all packages in ~package-archives~ before starting.
+
+#+begin_src elisp
+  (package-refresh-contents)
+#+end_src
+
+** Org
 
 Check if ORG Mode is not installed and install it.
 
-#+begin_src emacs-lisp
-(unless (package-installed-p 'org)
-  (package-refresh-contents)
-  (package-install 'org))
+#+begin_src elisp
+  (unless (package-installed-p 'org)
+    (package-refresh-contents)
+    (package-install 'org))
 #+end_src
 
 ** which-keys
 
-#+begin_src emacs-lisp
-(unless (package-installed-p 'which-key)
-(package-refresh-contents)
-(package-install 'which-key))
+   Display available key bindings in pop-up
+#+begin_src elisp
+  ;; Install which keys
+  (unless (package-installed-p 'which-key)
+    (package-refresh-contents)
+    (package-install 'which-key))
+
+  ;; Enable which-keys
+  (which-key-mode)
 #+end_src
+
+** Evil
+
+#+begin_src elisp
+  (unless (package-installed-p 'evil)
+    (package-install 'evil))
+
+  (require 'evil)
+  (evil-mode 1)
+#+end_src
+
 
 * Theme
 
 * Genral
 
-** Appearance
+** COMMENT Appearance
 
 Hide toolbar, menubar and scrollbar.
 
-#+begin_src emacs-lisp
+#+begin_src elisp
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+#+end_src
+
+Display line numbers
+
+#+begin_src elisp
+  (display-line-numbers-mode)
+#+end_src
+
+Make line numbers relative
+
+#+begin_src elisp
+  (setq display-line-numbers 'relative)
 #+end_src

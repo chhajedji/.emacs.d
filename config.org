@@ -2,7 +2,7 @@
 
 Refresh contents of all packages in ~package-archives~ before starting.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (package-refresh-contents)
 #+end_src
 
@@ -10,7 +10,7 @@ Refresh contents of all packages in ~package-archives~ before starting.
 
 Check if ORG Mode is not installed and install it.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (unless (package-installed-p 'org)
     (package-refresh-contents)
     (package-install 'org))
@@ -19,7 +19,7 @@ Check if ORG Mode is not installed and install it.
 ** which-keys
 
    Display available key bindings in pop-up
-#+begin_src elisp
+#+begin_src emacs-lisp
   ;; Install which keys
   (unless (package-installed-p 'which-key)
     (package-refresh-contents)
@@ -31,7 +31,7 @@ Check if ORG Mode is not installed and install it.
 
 ** Evil
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (unless (package-installed-p 'evil)
     (package-install 'evil))
 
@@ -44,11 +44,11 @@ Check if ORG Mode is not installed and install it.
 
 * Genral
 
-** COMMENT Appearance
+** Appearance
 
 Hide toolbar, menubar and scrollbar.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -56,12 +56,12 @@ Hide toolbar, menubar and scrollbar.
 
 Display line numbers
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (display-line-numbers-mode)
 #+end_src
 
 Make line numbers relative
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (setq display-line-numbers 'relative)
 #+end_src

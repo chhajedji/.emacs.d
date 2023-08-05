@@ -1,25 +1,75 @@
+To install any package, this config will be using ~use-package~. So
+before proceeding ahead with anything, install ~use-package~. Check this [[https://ianyepan.github.io/posts/setting-up-use-package/][~use-package~ tutorial]].
+
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  (eval-and-compile
+    (setq use-package-always-ensure t
+	  use-package-expand-minimally t))
+#+END_SRC
+
+Setting ~use-package-always-ensure~ to ~t~ saves us the trouble of
+having to specify ~:ensure t~ in any future packages we’d like to
+declare and install. The ~:ensure~ macro basically makes sure that the
+packages are correctly installed at every startup, and automatically
+installs the missing ones for you.
+
+
+* Theme
+
+** Before Initializing any theme.
+Initialize theme at start, so that any other visual changes won’t be
+overridden by default theme changes.
+
+Function to disable all applied themes.
+
+#+BEGIN_SRC emacs-lisp
+  (defun cc/disable-all-themes ()
+    "Disable all active themes."
+    (interactive)
+    (dolist (i custom-enabled-themes)
+      (disable-theme i)))
+#+END_SRC
+
+Add advice to ~load-theme~ to disable all themes before loading new theme.
+
+#+BEGIN_SRC emacs-lisp
+  (defadvice load-theme (before disable-themes-first activate)
+    (cc/disable-all-themes))
+#+END_SRC
+
+** Initializing the theme
+
+#+BEGIN_SRC emacs-lisp
+  (use-package solarized-theme
+    :config
+    (load-theme 'solarized-dark t))
+#+END_SRC
+
 * Packages
 
 Refresh contents of all packages in ~package-archives~ before starting.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (package-refresh-contents)
-#+end_src
+#+END_SRC
 
 ** Org
 
 Check if ORG Mode is not installed and install it.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (unless (package-installed-p 'org)
     (package-refresh-contents)
     (package-install 'org))
-#+end_src
+#+END_SRC
 
 ** which-keys
 
    Display available key bindings in pop-up
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
   ;; Install which keys
   (unless (package-installed-p 'which-key)
     (package-refresh-contents)
@@ -27,20 +77,18 @@ Check if ORG Mode is not installed and install it.
 
   ;; Enable which-keys
   (which-key-mode)
-#+end_src
+#+END_SRC
 
 ** Evil
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (unless (package-installed-p 'evil)
     (package-install 'evil))
 
   (require 'evil)
   (evil-mode 1)
-#+end_src
+#+END_SRC
 
-
-* Theme
 
 * Genral
 
@@ -48,20 +96,20 @@ Check if ORG Mode is not installed and install it.
 
 Hide toolbar, menubar and scrollbar.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-#+end_src
+#+END_SRC
 
 Display line numbers
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (display-line-numbers-mode)
-#+end_src
+#+END_SRC
 
 Make line numbers relative
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (setq display-line-numbers 'relative)
-#+end_src
+#+END_SRC

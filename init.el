@@ -5,6 +5,9 @@
       "http://stable.melpa.org/packages/"))
 (package-initialize)
 
+;; Refresh contents of all packages in ~package-archives~ before starting.
+(package-refresh-contents)
+
 ;; Load the settings from config.org file.
 (org-babel-load-file "~/.emacs.d/config.org")
 

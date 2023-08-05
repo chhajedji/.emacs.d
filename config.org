@@ -1,14 +1,16 @@
+* Pre-setup setup
+
 To install any package, this config will be using ~use-package~. So
 before proceeding ahead with anything, install ~use-package~. Check this [[https://ianyepan.github.io/posts/setting-up-use-package/][~use-package~ tutorial]].
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
   (eval-and-compile
     (setq use-package-always-ensure t
 	  use-package-expand-minimally t))
-#+END_SRC
+#+end_src
 
 Setting ~use-package-always-ensure~ to ~t~ saves us the trouble of
 having to specify ~:ensure t~ in any future packages we’d like to
@@ -16,60 +18,53 @@ declare and install. The ~:ensure~ macro basically makes sure that the
 packages are correctly installed at every startup, and automatically
 installs the missing ones for you.
 
-
 * Theme
-
 ** Before Initializing any theme.
 Initialize theme at start, so that any other visual changes won’t be
 overridden by default theme changes.
 
 Function to disable all applied themes.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (defun cc/disable-all-themes ()
     "Disable all active themes."
     (interactive)
     (dolist (i custom-enabled-themes)
       (disable-theme i)))
-#+END_SRC
+#+end_src
 
 Add advice to ~load-theme~ to disable all themes before loading new theme.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (defadvice load-theme (before disable-themes-first activate)
     (cc/disable-all-themes))
-#+END_SRC
+#+end_src
 
 ** Initializing the theme
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (use-package solarized-theme
     :config
     (load-theme 'solarized-dark t))
-#+END_SRC
+#+end_src
 
 * Packages
 
-Refresh contents of all packages in ~package-archives~ before starting.
-
-#+BEGIN_SRC emacs-lisp
-  (package-refresh-contents)
-#+END_SRC
-
 ** Org
 
-Check if ORG Mode is not installed and install it.
+#+begin_src emacs-lisp
+  (use-package org)
+#+end_src
 
-#+BEGIN_SRC emacs-lisp
-  (unless (package-installed-p 'org)
-    (package-refresh-contents)
-    (package-install 'org))
-#+END_SRC
+Show ~▾~ instead of ~...~ after a heading in org mode.
+#+begin_src emacs-lisp
+  (setq org-ellipsis " ▾")
+#+end_src
 
 ** which-keys
 
    Display available key bindings in pop-up
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   ;; Install which keys
   (unless (package-installed-p 'which-key)
     (package-refresh-contents)
@@ -77,18 +72,17 @@ Check if ORG Mode is not installed and install it.
 
   ;; Enable which-keys
   (which-key-mode)
-#+END_SRC
+#+end_src
 
 ** Evil
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (unless (package-installed-p 'evil)
     (package-install 'evil))
 
   (require 'evil)
   (evil-mode 1)
-#+END_SRC
-
+#+end_src
 
 * Genral
 
@@ -96,20 +90,110 @@ Check if ORG Mode is not installed and install it.
 
 Hide toolbar, menubar and scrollbar.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-#+END_SRC
+#+end_src
 
 Display line numbers
 
-#+BEGIN_SRC emacs-lisp
-  (display-line-numbers-mode)
-#+END_SRC
+#+begin_src emacs-lisp
+  (global-display-line-numbers-mode t)
+#+end_src
 
 Make line numbers relative
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (setq display-line-numbers 'relative)
-#+END_SRC
+#+end_src
+
+Follow window after splitting horizontally or vertically. Default behavior is to just split window and remain in same window.
+
+#+begin_src emacs-lisp
+  (defun split-and-follow-horizontally()
+    (interactive)
+    (split-window-below)
+    (balance-windows)
+    (other-window 1))
+  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+  (defun split-and-follow-vertically()
+    (interactive)
+    (split-window-right)
+    (balance-windows)
+    (other-window 1))
+  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+end_src
+
+Always show matching bracket.
+
+#+begin_src emacs-lisp
+  (show-paren-mode 1)
+  ;; Highlight brackets (default option).
+  (setq show-paren-style 'parenthesis)
+
+  ;; By default, there is a delay in showing matching parenthesis.
+  (setq show-paren-delay 0)
+#+end_src
+
+Show line and column number on bottom bar.
+
+#+begin_src emacs-lisp
+  (line-number-mode 1)
+  (column-number-mode 1)
+#+end_src
+
+Set transparency when focused and unfocused.
+
+#+begin_src emacs-lisp
+(set-frame-parameter (selected-frame) 'alpha '(100 92))
+#+end_src
+
+** Shortcuts
+   
+In Org mode, insert emacs lisp snippet with the keybinding ~C-c C-,~
+followed by ~el~.
+
+#+begin_src emacs-lisp
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+#+end_src
+
+Switch line numbers between relative and absolute.
+
+#+begin_src emacs-lisp
+  (defun cc/toggle-line-numbering ()
+    "Switch line numbering between absolute and relative."
+    (interactive)
+
+    (if (eq display-line-numbers 'relative)
+	(setq display-line-numbers t)
+      (setq display-line-numbers 'relative)))
+
+    ;; Lisp Hacking: Same functionality can be achieved with this snippet also.
+    ;; (setq display-line-numbers (if (eq display-line-numbers 'relative) t 'relative))
+
+  ;; Set key binding to toggle line number mode.
+  (global-set-key (kbd "C-c a") 'cc/toggle-line-numbering)
+#+end_src
+
+Enable ibuffer
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x b") 'ibuffer)
+#+end_src
+
+Edit ~config.org~
+#+begin_src emacs-lisp
+  (defun config-visit()
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+  (global-set-key (kbd "C-c e") 'config-visit)
+#+end_src
+
+Reload ~config.org~
+#+begin_src emacs-lisp
+  (defun config-reload()
+    (interactive)
+    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+  (global-set-key (kbd "C-c r") 'config-reload)
+#+end_src

@@ -1,7 +1,7 @@
 * Pre-setup setup
 
 To install any package, this config will be using ~use-package~. So
-before proceeding ahead with anything, install ~use-package~. Check this [[https://ianyepan.github.io/posts/setting-up-use-package/][~use-package~ tutorial]].
+before proceeding ahead with anything, install ~use-package~. Check this [[https://ianyepan.github.io/posts/setting-up-use-package/][tutorial]].
 
 #+begin_src emacs-lisp
   (unless (package-installed-p 'use-package)
@@ -64,7 +64,6 @@ Show ~▾~ instead of ~...~ after a heading in org mode.
 
    Display available key bindings in pop-up
 #+begin_src emacs-lisp
-  ;; Install which keys
   (unless (package-installed-p 'which-key)
     (package-refresh-contents)
     (package-install 'which-key))
@@ -76,8 +75,9 @@ Show ~▾~ instead of ~...~ after a heading in org mode.
 ** Evil
 
 #+begin_src emacs-lisp
-  (use-package evil)
-  (evil-mode 1)
+  (use-package evil
+    :config
+    (evil-mode 1))
 #+end_src
 
 ** Idle Highlight
@@ -86,9 +86,9 @@ Highlight all occurrences of word under cursor. Package enabled in
 programing and text mode only.
 #+begin_src emacs-lisp
   (use-package idle-highlight-mode
-    :init)
-  (idle-highlight-mode t)
-  (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
+    :config
+    (idle-highlight-mode t)
+    (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t))))
 #+end_src
 
 ** Org Bullets
@@ -116,7 +116,7 @@ This package highlights cursor for very small time when switching
 buffers.
 #+begin_src emacs-lisp
   (use-package beacon
-    :init
+    :config
     (beacon-mode 1))
 #+end_src
 
@@ -135,7 +135,6 @@ Navigating C database easier.
     :config
     ;; Enable cscope minor mode in all major modes.
     (cscope-minor-mode 1)
-    ;; (load-file "~/.emacs.d/xcscope.el")
     (cscope-setup)
 
     ;; Add cscope databases using this variable.

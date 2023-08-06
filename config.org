@@ -49,7 +49,6 @@ Add advice to ~load-theme~ to disable all themes before loading new theme.
 #+end_src
 
 * Packages
-
 ** Org
 
 #+begin_src emacs-lisp
@@ -84,12 +83,10 @@ Show ~▾~ instead of ~...~ after a heading in org mode.
   (evil-mode 1)
 #+end_src
 
-* Genral
-
+* General
 ** Appearance
 
 Hide toolbar, menubar and scrollbar.
-
 #+begin_src emacs-lisp
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -97,19 +94,17 @@ Hide toolbar, menubar and scrollbar.
 #+end_src
 
 Display line numbers
-
 #+begin_src emacs-lisp
   (global-display-line-numbers-mode t)
 #+end_src
 
 Make line numbers relative
-
 #+begin_src emacs-lisp
   (setq display-line-numbers 'relative)
 #+end_src
 
-Follow window after splitting horizontally or vertically. Default behavior is to just split window and remain in same window.
-
+Follow window after splitting horizontally or vertically. Default
+behavior is to just split window and remain in same window.
 #+begin_src emacs-lisp
   (defun split-and-follow-horizontally()
     (interactive)
@@ -127,7 +122,6 @@ Follow window after splitting horizontally or vertically. Default behavior is to
 #+end_src
 
 Always show matching bracket.
-
 #+begin_src emacs-lisp
   (show-paren-mode 1)
   ;; Highlight brackets (default option).
@@ -138,20 +132,191 @@ Always show matching bracket.
 #+end_src
 
 Show line and column number on bottom bar.
-
 #+begin_src emacs-lisp
   (line-number-mode 1)
   (column-number-mode 1)
 #+end_src
 
 Set transparency when focused and unfocused.
-
 #+begin_src emacs-lisp
 (set-frame-parameter (selected-frame) 'alpha '(100 92))
 #+end_src
 
+Truncate lines to next line.
+#+begin_src emacs-lisp
+  (setq truncate-lines nil)
+#+end_src
+
+Enable word wrap
+#+begin_src emacs-lisp
+  (setq word-wrap t)
+#+end_src
+
+Auto-fill for text mode (Basically, insert new line after defined
+characters {set by ~set-fill-coloumn~} in the given line.)
+#+begin_src emacs-lisp
+  (add-hook 'text-mode-hook 'turn-on-auto-fill)
+  (setq set-fill-coloumn 70)
+#+end_src
+
+Change yes/no question to y/n.
+#+begin_src emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+end_src
+
+Enable spell check. This will enable spell check in text modes and
+only for comments in programming mode.
+#+begin_src emacs-lisp
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+#+end_src
+
+ESC to be used as keyboard-quit (C-g)
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+end_src
+
+Global line highlight mode keybinding.
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c l h") 'global-hl-line-mode)
+#+end_src
+
+Set scroll margin. Vim’s emulation of scrolloff or so. Set it to 0 for
+terminal Set it to 0 for terminal.
+#+begin_src emacs-lisp
+  (setq scroll-margin 3)
+  (add-hook 'term-mode-hook
+	    (lambda ()
+	      (make-local-variable 'scroll-margin)
+	      (setq scroll-margin 0)))
+#+end_src
+
+No welcome screen on startup
+#+begin_src emacs-lisp
+  (setq inhibit-startup-screen t)
+#+end_src
+
+Scroll line by line when reaching end of screen.
+#+begin_src emacs-lisp
+  (setq scroll-conservatively 100)
+#+end_src
+
+When using GUI version, convert symbol text into symbols.
+#+begin_src emacs-lisp
+  (when window-system (global-prettify-symbols-mode t))
+#+end_src
+
+Do not create backup and autosave files.
+#+begin_src emacs-lisp
+  (setq make-backup-files nil)
+  (setq auto-save-default nil)
+#+end_src
+
+Show function name in mode-line for C functions
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-common-hook
+	    (lambda ()
+	      (which-function-mode t)))
+#+end_src
+
+Display current file name in title bar.
+#+begin_src emacs-lisp
+  (setq frame-title-format
+  (list (format "%s %%S: %%j " (system-name))
+  '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+#+end_src
+
+Treat ~_~ as part of the word.
+#+begin_src emacs-lisp
+  (modify-syntax-entry ?_ "w")
+#+end_src
+
 ** Shortcuts
-   
+
+Scroll one line up and down by ~M-n~ and ~M-p~.
+#+begin_src emacs-lisp
+  (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
+  (global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
+#+end_src
+
+List recently opened files in emacs.
+#+begin_src emacs-lisp
+  (require 'recentf)
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 25)
+
+  ;; Bind to `C-c f r'.
+  (global-set-key "\C-c\ f\ r" 'recentf-open-files)
+#+end_src
+
+Toggle split view. Switch from vertical to horizontal split and
+vice-versa with same binding. Same as ~C-w L~ and ~C-w J~ in ~vi~.
+#+begin_src emacs-lisp
+  (defun toggle-window-split ()
+    (interactive)
+    (if (= (count-windows) 2)
+	(let* ((this-win-buffer (window-buffer))
+	       (next-win-buffer (window-buffer (next-window)))
+	       (this-win-edges (window-edges (selected-window)))
+	       (next-win-edges (window-edges (next-window)))
+	       (this-win-2nd (not (and (<= (car this-win-edges)
+					   (car next-win-edges))
+				       (<= (cadr this-win-edges)
+					   (cadr next-win-edges)))))
+	       (splitter
+		(if (= (car this-win-edges)
+		       (car (window-edges (next-window))))
+		    'split-window-horizontally
+		  'split-window-vertically)))
+	  (delete-other-windows)
+	  (let ((first-win (selected-window)))
+	    (funcall splitter)
+	    (if this-win-2nd (other-window 1))
+	    (set-window-buffer (selected-window) this-win-buffer)
+	    (set-window-buffer (next-window) next-win-buffer)
+	    (select-window first-win)
+	    (if this-win-2nd (other-window 1))))))
+
+  (global-set-key (kbd "C-x |") 'toggle-window-split)
+#+end_src
+
+Copy file path to clipboard.
+#+begin_src emacs-lisp
+  (defun copy-file-name-to-clipboard ()
+    "Put the current file name on the clipboard"
+    (interactive)
+    (let ((filename (if (equal major-mode 'dired-mode)
+			default-directory
+		      (buffer-file-name))))
+      (when filename
+	(with-temp-buffer
+	  (insert filename)
+	  (clipboard-kill-region (point-min) (point-max)))
+	(message "%s copied to clipboard." filename ))))
+  (global-set-key (kbd "C-c f c") 'copy-file-name-to-clipboard)
+#+end_src
+
+Toggle trailing whitespaces
+
+#+begin_src emacs-lisp
+  (defun cc/toggle-trailing-whitespace()
+    "This function toggles display of trailing whitespaces."
+    (interactive)
+    (setq show-trailing-whitespace (not show-trailing-whitespace))
+    (message "show-trailing-whitespace is set to %s"
+	     show-trailing-whitespace))
+
+  (global-set-key (kbd "C-c l w t") 'cc/toggle-trailing-whitespace)
+#+end_src
+
+Clear all whitespaces.
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c l w d") 'whitespace-cleanup)
+#+end_src
+
 In Org mode, insert emacs lisp snippet with the keybinding ~C-c C-,~
 followed by ~el~.
 
@@ -196,4 +361,90 @@ Reload ~config.org~
     (interactive)
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
+#+end_src
+
+Kill buffer and close split
+
+#+begin_src emacs-lisp
+  (defun cc/kill-buf-and-close-split()
+    "Kill current buffer and delete the window."
+    (interactive)
+    (kill-buffer)
+    (delete-window))
+
+  (global-set-key (kbd "C-x K") 'cc/kill-buf-and-close-split)
+#+end_src
+** Terminal
+
+Setting default shell to bash. Due to this, ansi-term will not ask
+which shell to use.
+
+#+begin_src emacs-lisp
+  ;; `ansi-term' will launch bash without prompt.
+  (defvar my-term-shell "/bin/bash")
+  (defadvice ansi-term (before force-bash)
+    (interactive (list my-term-shell)))
+  (ad-activate 'ansi-term)
+#+end_src
+
+Keybinding to open ansi-term in a new split.
+#+begin_src emacs-lisp
+  (defun cc/split-ansi-term()
+      "Start a ansi-term in a new split."
+    (interactive)
+    (split-window-sensibly)
+    (other-window 1)
+    (ansi-term "bash"))
+  (global-set-key "\C-c\ t" 'cc/split-ansi-term)
+#+end_src
+
+Quit ansi-term without confirming to kill running process.
+#+begin_src emacs-lisp
+  (defun set-no-process-query-on-exit ()
+    (let ((proc (get-buffer-process (current-buffer))))
+      (when (processp proc)
+	(set-process-query-on-exit-flag proc nil))))
+
+  (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
+#+end_src
+
+** Markdown
+
+View markdown preview as you edit a markdown file. [[https://camsaul.com/emacs-lisp/2020/06/09/emacs-lisp-intro-markdown-live-previews-part-1.html][Source]].
+#+begin_src emacs-lisp
+  (defun cam/-scroll-percentage ()
+    (/ (float (line-number-at-pos (window-start)))
+       (float (line-number-at-pos (point-max)))))
+
+  (defun cam/-set-window-start-to-percentage (scroll-percentage)
+    (goto-char (point-min))
+    (let ((target-line-number (truncate (* (line-number-at-pos (point-max)) scroll-percentage))))
+      (forward-line (1- target-line-number)))
+    (set-window-start nil (point)))
+
+  (defun cam/-render-markdown-preview-current-buffer ()
+    (message "Rendering Markdown preview of %s" buffer-file-name)
+    (shell-command-on-region (point-min) (point-max) "pandoc -f gfm" "*Preview Markdown Output*")
+    (switch-to-buffer-other-window "*Preview Markdown Output*")
+    (let ((document (libxml-parse-html-region (point) (point-max))))
+      (erase-buffer)
+      (shr-insert-document `(base ((href . ,url)) ,document))
+      (setq buffer-read-only t)))
+
+  (defun cam/-preview-markdown-file (filename)
+    (save-selected-window
+      (find-file filename)
+      (let ((url (concat "file://" filename))
+	    (scroll-percentage (cam/-scroll-percentage)))
+	(cam/-render-markdown-preview-current-buffer)
+	(cam/-set-window-start-to-percentage scroll-percentage))))
+
+  (defun cam/preview-markdown (&optional filename)
+    "Render a markdown preview of FILENAME (by default, the current file) to HTML and display it with `shr-insert-document'."
+    (interactive "fFile: ")
+    (if filename
+	(progn
+	  (cam/-preview-markdown-file filename)
+	  (switch-to-buffer (current-buffer)))
+      (cam/-preview-markdown-file buffer-file-name)))
 #+end_src

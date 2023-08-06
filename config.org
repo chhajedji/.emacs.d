@@ -76,11 +76,122 @@ Show ~▾~ instead of ~...~ after a heading in org mode.
 ** Evil
 
 #+begin_src emacs-lisp
-  (unless (package-installed-p 'evil)
-    (package-install 'evil))
-
-  (require 'evil)
+  (use-package evil)
   (evil-mode 1)
+#+end_src
+
+** Idle Highlight
+
+Highlight all occurrences of word under cursor. Package enabled in
+programing and text mode only.
+#+begin_src emacs-lisp
+  (use-package idle-highlight-mode
+    :init)
+  (idle-highlight-mode t)
+  (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
+#+end_src
+
+** Org Bullets
+
+Display bullets instead of stars in org mode.
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
+    :custom
+    (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+  (add-hook 'shell-mode-hook
+	    (lambda ()
+	      (face-remap-set-base 'comint-highlight-prompt :inherit
+				   nil)))
+
+  ;; Set indentatoin for bullets.
+  (setq-default org-list-indent-offset 4)
+#+end_src
+
+** Beacon
+
+This package highlights cursor for very small time when switching
+buffers.
+#+begin_src emacs-lisp
+  (use-package beacon
+    :init
+    (beacon-mode 1))
+#+end_src
+
+** Magit
+
+Use git in emacs in style.
+#+begin_src emacs-lisp
+  (use-package magit)
+#+end_src
+
+** Cscope
+
+Navigating C database easier.
+#+begin_src emacs-lisp
+  (use-package xcscope
+    :config
+    ;; Enable cscope minor mode in all major modes.
+    (cscope-minor-mode 1)
+    ;; (load-file "~/.emacs.d/xcscope.el")
+    (cscope-setup)
+
+    ;; Add cscope databases using this variable.
+    ;; (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
+
+    ;; Unset the default binding C-\
+    (define-key global-map "\C-\\" nil)
+    ;; Set easy key bindings to navigate
+    (define-key global-map "\C-\\S"  'cscope-tell-user-about-directory)
+    (define-key global-map "\C-\\a"  'cscope-set-initial-directory)
+    (define-key global-map "\C-\\i"  'cscope-find-files-including-file)
+    (define-key global-map "\C-\\c"  'cscope-find-functions-calling-this-function)
+    (define-key global-map "\C-\\d"  'cscope-find-called-functions)
+    (define-key global-map "\C-\\e"  'cscope-find-egrep-pattern)
+    (define-key global-map "\C-\\t"  'cscope-find-this-text-string)
+    (define-key global-map "\C-\\s"  'cscope-find-this-symbol)
+    (define-key global-map "\C-\\f"  'cscope-find-this-file)
+    (define-key global-map "\C-\\g"  'cscope-find-global-definition)
+    (define-key global-map "\C-\\G"  'cscope-find-global-definition-no-prompting)
+    (define-key global-map "\C-\\u"  'cscope-pop-mark))
+#+end_src
+
+** Helm
+
+#+begin_src emacs-lisp
+  (use-package helm)
+
+  (setq helm-split-window-in-side-p t
+	helm-move-to-line-cycle-in-source t)
+
+  (custom-set-variables '(helm-completion-style (quote emacs)))
+
+  ;; Enable helm mode
+  (helm-mode 1)
+
+  ;; List and manage buffers.
+  ;; Select multiple buffers with C-Space and M-D to kill all buffers.
+  (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+
+  (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+  ;; Bookmark menu.
+  (global-set-key (kbd "C-x r b") 'helm-bookmark)
+  ;; Helm resizes according to the number of candidates
+  (helm-autoresize-mode 1)
+  ;; Finding files with Helm
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  ;; Use Helm for calculations
+  (global-set-key (kbd "M-c") 'helm-calcul-expression)
+  ;; Replaces the default isearch keybinding
+  (global-set-key (kbd "C-s") 'helm-occur)
+  ;; Helmized apropos interface
+  (global-set-key (kbd "C-h a") 'helm-apropos)
+  ;; Improved M-x menu
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  ;; Show kill ring, pick something to paste
+  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 #+end_src
 
 * General

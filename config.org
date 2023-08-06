@@ -83,12 +83,14 @@ Show ~▾~ instead of ~...~ after a heading in org mode.
 ** Idle Highlight
 
 Highlight all occurrences of word under cursor. Package enabled in
-programing and text mode only.
+programing and text mode only. ~idle-highlight-idle-time~ sets time
+taken to highlight the word.
 #+begin_src emacs-lisp
   (use-package idle-highlight-mode
     :config
     (idle-highlight-mode t)
-    (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t))))
+    (setq idle-highlight-idle-time 2.0)
+    :hook ((prog-mode text-mode) . idle-highlight-mode))
 #+end_src
 
 ** Org Bullets
@@ -138,7 +140,7 @@ Navigating C database easier.
     (cscope-setup)
 
     ;; Add cscope databases using this variable.
-    ;; (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
+    (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
 
     ;; Unset the default binding C-\
     (define-key global-map "\C-\\" nil)
@@ -210,7 +212,16 @@ Display line numbers
 
 Make line numbers relative
 #+begin_src emacs-lisp
-  (setq display-line-numbers 'relative)
+  (setq display-line-numbers-type 'relative)
+#+end_src
+
+Change message of scratch buffer.
+
+To start the scratch buffer in text mode, modify ~initial-major-mode~
+variable.
+#+begin_src emacs-lisp
+  (setq initial-scratch-message "**** Welcome to my Emacs ****\n\n")
+  (setq initial-major-mode 'text-mode)
 #+end_src
 
 Follow window after splitting horizontally or vertically. Default

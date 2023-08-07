@@ -83,14 +83,14 @@ Show ~▾~ instead of ~...~ after a heading in org mode.
 ** Idle Highlight
 
 Highlight all occurrences of word under cursor. Package enabled in
-programing and text mode only. ~idle-highlight-idle-time~ sets time
+programming and text mode only. ~idle-highlight-idle-time~ sets time
 taken to highlight the word.
 #+begin_src emacs-lisp
   (use-package idle-highlight-mode
+
     :config
-    (idle-highlight-mode t)
     (setq idle-highlight-idle-time 2.0)
-    :hook ((prog-mode text-mode) . idle-highlight-mode))
+    :hook ((prog-mode) . idle-highlight-mode))
 #+end_src
 
 ** Org Bullets

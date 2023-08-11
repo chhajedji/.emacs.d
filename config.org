@@ -93,6 +93,12 @@ taken to highlight the word.
     :hook ((prog-mode) . idle-highlight-mode))
 #+end_src
 
+Set the face of the highlighted word. Use ~:weight bold~ to make it bold.
+#+begin_src emacs-lisp
+  (custom-set-faces
+   '(idle-highlight ((t (:background "yellow" :foreground "black")))))
+#+end_src
+
 ** Org Bullets
 
 Display bullets instead of stars in org mode.
@@ -197,6 +203,13 @@ Navigating C database easier.
 
 * General
 ** Appearance
+
+
+Set cursor color
+#+begin_src emacs-lisp
+  (custom-set-faces
+   '(cursor ((t (:background "brown")))))
+#+end_src
 
 Hide toolbar, menubar and scrollbar.
 #+begin_src emacs-lisp

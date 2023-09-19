@@ -89,7 +89,7 @@ taken to highlight the word.
   (use-package idle-highlight-mode
 
     :config
-    (setq idle-highlight-idle-time 2.0)
+    (setq idle-highlight-idle-time 1.0)
     :hook ((prog-mode) . idle-highlight-mode))
 #+end_src
 
@@ -146,7 +146,7 @@ Navigating C database easier.
     (cscope-setup)
 
     ;; Add cscope databases using this variable.
-    (setq cscope-set-initial-directory '("~/.cstags_dir/esp-idf/"))
+    (setq cscope-set-initial-directory '("~/.cstags_dir/nomo/"))
 
     ;; Unset the default binding C-\
     (define-key global-map "\C-\\" nil)
@@ -204,6 +204,10 @@ Navigating C database easier.
 * General
 ** Appearance
 
+Always wrap text (Move to next line when window is over).
+#+begin_src emacs-lisp
+  (setq visual-line-mode 1)
+#+end_src
 
 Set cursor color
 #+begin_src emacs-lisp
@@ -233,7 +237,7 @@ Change message of scratch buffer.
 To start the scratch buffer in text mode, modify ~initial-major-mode~
 variable.
 #+begin_src emacs-lisp
-  (setq initial-scratch-message "**** Welcome to my Emacs ****\n\n")
+  (setq initial-scratch-message "**** Hello World!!! ****\n\n")
   (setq initial-major-mode 'text-mode)
 #+end_src
 

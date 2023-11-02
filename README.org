@@ -11,11 +11,14 @@ Emacs. Better in a way that it offers tons of more packages and to be
 honest, [[https://elpa.gnu.org/][ELPA]], the default ones are not even useful. To install MELPA, add
 following snippet at the starting of your [[./init.el][init.el]].
 
-#+begin_emacs-lisp
+#+begin_src emacs-lisp
 (require 'package)
 ;; Any add to list for package-archives (to add marmalade or melpa) goes here
 (add-to-list 'package-archives 
     '("MELPA" .
       "http://melpa.org/packages/"))
 (package-initialize)
-#+end_emacs-lisp
+#+end_src
+
+Follow the [[./config.org][config.org]] file for detailed list and configuration of
+packages and basic settings.

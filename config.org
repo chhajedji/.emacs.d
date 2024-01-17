@@ -212,6 +212,14 @@ Navigating C database easier.
 * General
 ** Appearance
 
+   Set font size. The value is in 1/10pt, so 130 will give 13pt, etc.
+#+begin_src emacs-lisp
+  (set-face-attribute 'default nil :height 130)
+
+  ;; To set font and size, use:
+  ;; (set-default-font "Monaco 14")
+#+end_src
+
 Always wrap text (Move to next line when window is over).
 #+begin_src emacs-lisp
   (setq visual-line-mode 1)

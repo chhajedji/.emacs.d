@@ -201,6 +201,14 @@ Navigating C database easier.
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 #+end_src
 
+** Markdown
+
+   Emacs does not have support for markdown by default. 🤦
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+    :ensure t)
+#+end_src
+
 * General
 ** Appearance
 

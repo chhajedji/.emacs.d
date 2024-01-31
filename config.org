@@ -387,11 +387,13 @@ Treat ~_~ as part of the word.
   (modify-syntax-entry ?_ "w")
 #+end_src
 
-Set tab length to 4 spaces
+Set tab length to 4 spaces.  In ~cc-mode~ based modes for C-like
+languages, something like this should do what you want:
 #+begin_src emacs-lisp
-  (setq-default indent-tabs-mode nil)
+  (setq-default indent-tabs-mode t)
   (setq-default tab-width 4)
   (setq indent-line-function 'insert-tab)
+  (defvaralias 'c-basic-offset 'tab-width)
 #+end_src
 
 ** Shortcuts

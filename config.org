@@ -387,6 +387,13 @@ Treat ~_~ as part of the word.
   (modify-syntax-entry ?_ "w")
 #+end_src
 
+Set tab length to 4 spaces
+#+begin_src emacs-lisp
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+  (setq indent-line-function 'insert-tab)
+#+end_src
+
 ** Shortcuts
 
 Scroll one line up and down by ~M-n~ and ~M-p~.

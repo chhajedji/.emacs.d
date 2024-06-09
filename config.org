@@ -390,9 +390,13 @@ Treat ~_~ as part of the word.
 Set tab length to 4 spaces.  In ~cc-mode~ based modes for C-like
 languages, something like this should do what you want:
 #+begin_src emacs-lisp
+  ;; Use tabs instead of spaces.
   (setq-default indent-tabs-mode t)
+
+  ;; Visualize as 4 spaces when used a tab.
   (setq-default tab-width 4)
-  (setq indent-line-function 'insert-tab)
+
+  ;; In C like languages, use ~tab-width~ value to represent tab.
   (defvaralias 'c-basic-offset 'tab-width)
 #+end_src
 
